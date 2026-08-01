@@ -126,47 +126,98 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
+<style>
+        html { scroll-behavior: smooth; }
+        .lang-switcher { position: relative; }
+        .lang-menu {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            background: white;
+            border: 2px solid #191c1e;
+            min-width: 110px;
+            box-shadow: 4px 4px 0px #22c55e;
+            z-index: 60;
+        }
+        .lang-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 10px 12px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font: inherit;
+            color: #191c1e;
+        }
+        .lang-option.active {
+            background: #22c55e;
+            color: #004b1e;
+        }
+        .view-page {
+            display: none;
+            padding: 96px 40px 80px;
+            min-height: 70vh;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .view-page.active {
+            display: block;
+        }
+        .view-page-card {
+            border: 2px solid #191c1e;
+            background: white;
+            box-shadow: 4px 4px 0px #191c1e;
+            padding: 32px;
+        }
+    </style>
 </head>
 <body class="font-body-md text-body-md overflow-x-hidden">
 <!-- TopNavBar -->
 <header class="fixed top-0 left-0 right-0 z-50 bg-surface border-b-2 border-on-surface">
 <div class="flex justify-between items-center w-full px-margin h-20 max-w-container-max mx-auto">
-<div class="font-headline-md text-headline-md font-black text-on-surface">
+<div id="brand-name" class="font-headline-md text-headline-md font-black text-on-surface">
                 JhaTech Growth
             </div>
 <nav class="hidden md:flex gap-8 items-center">
-<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Home</a>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#">Analysis</a>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#">Pricing</a>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#">Referral</a>
+<a id="nav-home" class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#home" data-target="home">Home</a>
+<a id="nav-analysis" class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#analysis" data-target="analysis">Analysis</a>
+<a id="nav-pricing" class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#pricing" data-target="pricing">Pricing</a>
+<a id="nav-referral" class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#referral" data-target="referral">Referral</a>
 </nav>
 <div class="flex items-center gap-4">
-<button class="hidden lg:block px-6 py-3 brutalist-border font-button-text text-button-text bg-white hover:bg-surface-container transition-all active:translate-y-0.5 shadow-black">
+<button id="book-demo" class="hidden lg:block px-6 py-3 brutalist-border font-button-text text-button-text bg-white hover:bg-surface-container transition-all active:translate-y-0.5 shadow-black">
                     Book a Demo
                 </button>
-<button class="px-6 py-3 brutalist-border font-button-text text-button-text bg-primary-container text-on-primary-container hover:opacity-90 transition-all active:translate-y-0.5 shadow-mint">
+<button id="try-free" class="px-6 py-3 brutalist-border font-button-text text-button-text bg-primary-container text-on-primary-container hover:opacity-90 transition-all active:translate-y-0.5 shadow-mint">
                     Try for Free
                 </button>
-<span class="material-symbols-outlined text-on-surface cursor-pointer p-2 hover:bg-surface-container rounded-full">language</span>
+<div class="lang-switcher">
+<button id="lang-toggle" type="button" class="material-symbols-outlined text-on-surface cursor-pointer p-2 hover:bg-surface-container rounded-full" aria-label="Language switcher">language</button>
+<div id="lang-menu" class="lang-menu hidden">
+<button class="lang-option active" type="button" data-lang="en">EN</button>
+<button class="lang-option" type="button" data-lang="hi">HI</button>
+</div>
+</div>
 </div>
 </div>
 </header>
 <main class="mt-20">
 <!-- Hero Section -->
-<section class="py-stack-xl px-margin max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<section id="home-section" class="py-stack-xl px-margin max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 <div class="space-y-stack-lg">
-<span class="font-label-md text-label-md text-primary tracking-widest uppercase">AI-Driven Digital Growth Platform</span>
-<h1 class="font-headline-xl text-headline-xl leading-none">
+<span id="hero-eyebrow" class="font-label-md text-label-md text-primary tracking-widest uppercase">AI-Driven Digital Growth Platform</span>
+<h1 id="hero-title" class="font-headline-xl text-headline-xl leading-none">
                     Grow your business with a smart website and marketing plan.
                 </h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+<p id="hero-copy" class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
                     Built for shop owners, local brands, and partners who want faster growth, transparent pricing, and a simpler path to digital success.
                 </p>
 <div class="flex flex-wrap gap-stack-md pt-4">
-<button class="px-8 py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
+<button id="hero-primary" class="px-8 py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
                         Start Your Growth Check
                     </button>
-<button class="px-8 py-4 brutalist-border bg-white text-on-surface font-button-text text-button-text shadow-black active:translate-y-0.5 transition-all">
+<button id="hero-secondary" class="px-8 py-4 brutalist-border bg-white text-on-surface font-button-text text-button-text shadow-black active:translate-y-0.5 transition-all">
                         Join Referral Program
                     </button>
 </div>
@@ -180,52 +231,52 @@
 </div>
 </section>
 <!-- Problem/Solution Card (Pain-Point Analysis) -->
-<section class="py-stack-xl px-margin bg-surface-container-lowest">
+<section id="analysis-section" class="py-stack-xl px-margin bg-surface-container-lowest">
 <div class="max-w-container-max mx-auto">
 <div class="brutalist-border bg-white p-stack-lg flex flex-col md:flex-row gap-12">
 <div class="flex-1 space-y-stack-md">
-<span class="font-label-md text-label-md text-tertiary">1. CUSTOMER PAIN-POINT ANALYSIS</span>
-<h2 class="font-headline-lg text-headline-lg">Understand your challenge before building a solution.</h2>
+<span id="analysis-eyebrow" class="font-label-md text-label-md text-tertiary">1. CUSTOMER PAIN-POINT ANALYSIS</span>
+<h2 id="analysis-title" class="font-headline-lg text-headline-lg">Understand your challenge before building a solution.</h2>
 <form class="space-y-4 pt-4">
 <div>
-<label class="block font-label-md text-label-md mb-2">Business name</label>
-<input class="w-full brutalist-border p-3 focus:ring-0 focus:border-primary outline-none" placeholder="e.g. Acme Studio" type="text"/>
+<label id="analysis-business-label" class="block font-label-md text-label-md mb-2">Business name</label>
+<input id="analysis-business" class="w-full brutalist-border p-3 focus:ring-0 focus:border-primary outline-none" placeholder="e.g. Acme Studio" type="text"/>
 </div>
 <div>
-<label class="block font-label-md text-label-md mb-2">Main challenge</label>
-<textarea class="w-full brutalist-border p-3 focus:ring-0 focus:border-primary outline-none" placeholder="What is holding you back?" rows="3"></textarea>
+<label id="analysis-challenge-label" class="block font-label-md text-label-md mb-2">Main challenge</label>
+<textarea id="analysis-challenge" class="w-full brutalist-border p-3 focus:ring-0 focus:border-primary outline-none" placeholder="What is holding you back?" rows="3"></textarea>
 </div>
 <div>
-<label class="block font-label-md text-label-md mb-2">Preferred support</label>
-<select class="w-full brutalist-border p-3 focus:ring-0 focus:border-primary outline-none">
+<label id="analysis-support-label" class="block font-label-md text-label-md mb-2">Preferred support</label>
+<select id="analysis-support" class="w-full brutalist-border p-3 focus:ring-0 focus:border-primary outline-none">
 <option>Website development</option>
 <option>Marketing Strategy</option>
 <option>Full Scale Growth</option>
 </select>
 </div>
-<button class="w-full py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
+<button id="analysis-submit" class="w-full py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
                                 Analyze with AI
                             </button>
 </form>
 </div>
 <div class="w-full md:w-1/3 brutalist-border bg-surface-container p-stack-lg">
-<h3 class="font-headline-md text-headline-md mb-6">What you get</h3>
+<h3 id="analysis-card-title" class="font-headline-md text-headline-md mb-6">What you get</h3>
 <ul class="space-y-4">
 <li class="flex items-start gap-3">
 <span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="font-body-md text-body-md">AI-powered business analysis report</span>
+<span id="analysis-benefit-1" class="font-body-md text-body-md">AI-powered business analysis report</span>
 </li>
 <li class="flex items-start gap-3">
 <span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="font-body-md text-body-md">Website + marketing recommendations</span>
+<span id="analysis-benefit-2" class="font-body-md text-body-md">Website + marketing recommendations</span>
 </li>
 <li class="flex items-start gap-3">
 <span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="font-body-md text-body-md">Direct WhatsApp inquiry support</span>
+<span id="analysis-benefit-3" class="font-body-md text-body-md">Direct WhatsApp inquiry support</span>
 </li>
 <li class="flex items-start gap-3">
 <span class="material-symbols-outlined text-primary">check_circle</span>
-<span class="font-body-md text-body-md">Competitor performance benchmarking</span>
+<span id="analysis-benefit-4" class="font-body-md text-body-md">Competitor performance benchmarking</span>
 </li>
 </ul>
 </div>
@@ -233,15 +284,15 @@
 </div>
 </section>
 <!-- Pricing Section -->
-<section class="py-stack-xl px-margin max-w-container-max mx-auto">
+<section id="pricing-section" class="py-stack-xl px-margin max-w-container-max mx-auto">
 <div class="text-center mb-stack-xl">
-<span class="font-label-md text-label-md text-tertiary">2. TRANSPARENT PRICING &amp; VALUE</span>
-<h2 class="font-headline-lg text-headline-lg mt-2">Simple pricing with clear value at every step.</h2>
+<span id="pricing-eyebrow" class="font-label-md text-label-md text-tertiary">2. TRANSPARENT PRICING &amp; VALUE</span>
+<h2 id="pricing-title" class="font-headline-lg text-headline-lg mt-2">Simple pricing with clear value at every step.</h2>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 <!-- Starter -->
 <div class="brutalist-border bg-white p-8 flex flex-col hover:bg-surface-container-low transition-colors group">
-<h3 class="font-headline-md text-headline-md mb-2">Starter Growth Site</h3>
+<h3 id="plan-1-title" class="font-headline-md text-headline-md mb-2">Starter Growth Site</h3>
 <div class="text-primary font-headline-lg text-headline-lg mb-6">₹18,000</div>
 <ul class="space-y-4 mb-10 flex-grow">
 <li class="flex items-center gap-2 font-body-md text-body-md">
@@ -263,7 +314,7 @@
 </div>
 <!-- Growth -->
 <div class="brutalist-border bg-white p-8 flex flex-col shadow-black group">
-<h3 class="font-headline-md text-headline-md mb-2">Growth Marketing Bundle</h3>
+<h3 id="plan-2-title" class="font-headline-md text-headline-md mb-2">Growth Marketing Bundle</h3>
 <div class="text-primary font-headline-lg text-headline-lg mb-6">₹35,000</div>
 <ul class="space-y-4 mb-10 flex-grow">
 <li class="flex items-center gap-2 font-body-md text-body-md">
@@ -279,13 +330,13 @@
                             Social media content plan
                         </li>
 </ul>
-<button class="w-full py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
+<button id="plan-2-btn" class="w-full py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
                         Go Premium
                     </button>
 </div>
 <!-- AI Smart -->
 <div class="brutalist-border bg-white p-8 flex flex-col hover:bg-surface-container-low transition-colors group">
-<h3 class="font-headline-md text-headline-md mb-2">AI Smart Growth</h3>
+<h3 id="plan-3-title" class="font-headline-md text-headline-md mb-2">AI Smart Growth</h3>
 <div class="text-primary font-headline-lg text-headline-lg mb-6">₹55,000</div>
 <ul class="space-y-4 mb-10 flex-grow">
 <li class="flex items-center gap-2 font-body-md text-body-md">
@@ -301,50 +352,50 @@
                             Monthly competitor insights
                         </li>
 </ul>
-<button class="w-full py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
+<button id="plan-3-btn" class="w-full py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
                         Inquire Now
                     </button>
 </div>
 </div>
 <div class="mt-stack-lg brutalist-border bg-secondary-container p-6 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
-<span class="font-headline-md text-headline-md">Need instant help?</span>
-<p class="font-body-md text-body-md">Message us directly on WhatsApp for quick answers and project guidance.</p>
-<button class="px-6 py-3 brutalist-border bg-[#25D366] text-white font-button-text text-button-text shadow-black active:translate-y-0.5 transition-all flex items-center gap-2">
+<span id="pricing-help-title" class="font-headline-md text-headline-md">Need instant help?</span>
+<p id="pricing-help-copy" class="font-body-md text-body-md">Message us directly on WhatsApp for quick answers and project guidance.</p>
+<button id="pricing-whatsapp" class="px-6 py-3 brutalist-border bg-[#25D366] text-white font-button-text text-button-text shadow-black active:translate-y-0.5 transition-all flex items-center gap-2">
 <span class="material-symbols-outlined">chat</span>
                     Chat on WhatsApp
                 </button>
 </div>
 </section>
 <!-- Referral Section -->
-<section class="py-stack-xl px-margin bg-inverse-surface text-inverse-on-surface">
+<section id="referral-section" class="py-stack-xl px-margin bg-inverse-surface text-inverse-on-surface">
 <div class="max-w-container-max mx-auto">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 <div class="space-y-stack-md">
-<span class="font-label-md text-label-md text-primary-fixed uppercase tracking-widest">3. REFERRAL PARTNER PROGRAM</span>
-<h2 class="font-headline-lg text-headline-lg text-white">Bring more clients and earn while helping businesses grow.</h2>
-<p class="font-body-lg text-body-lg text-surface-variant">
+<span id="referral-eyebrow" class="font-label-md text-label-md text-primary-fixed uppercase tracking-widest">3. REFERRAL PARTNER PROGRAM</span>
+<h2 id="referral-title" class="font-headline-lg text-headline-lg text-white">Bring more clients and earn while helping businesses grow.</h2>
+<p id="referral-copy" class="font-body-lg text-body-lg text-surface-variant">
                             Our partner ecosystem rewards community members who connect high-potential businesses with our growth infrastructure.
                         </p>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6">
 <div class="p-6 bg-surface-container-variant border-l-4 border-primary-fixed">
-<h4 class="font-headline-md text-headline-md text-white mb-2">Why join?</h4>
+<h4 id="referral-why-title" class="font-headline-md text-headline-md text-white mb-2">Why join?</h4>
 <ul class="space-y-2 opacity-80 font-body-md text-body-md">
-<li>Earn ₹1,000 per successful sale</li>
-<li>No degree required to join</li>
-<li>AI-guided support and pitch help</li>
+<li id="referral-why-1">Earn ₹1,000 per successful sale</li>
+<li id="referral-why-2">No degree required to join</li>
+<li id="referral-why-3">AI-guided support and pitch help</li>
 </ul>
 </div>
 <div class="p-6 bg-surface-container-variant border-l-4 border-primary-fixed">
-<h4 class="font-headline-md text-headline-md text-white mb-2">Support</h4>
+<h4 id="referral-support-title" class="font-headline-md text-headline-md text-white mb-2">Support</h4>
 <ul class="space-y-2 opacity-80 font-body-md text-body-md">
-<li>Ready-to-use promo scripts</li>
-<li>Exclusive growth webinars</li>
-<li>Dedicated partner dashboard</li>
+<li id="referral-support-1">Ready-to-use promo scripts</li>
+<li id="referral-support-2">Exclusive growth webinars</li>
+<li id="referral-support-3">Dedicated partner dashboard</li>
 </ul>
 </div>
 </div>
 <div class="pt-8">
-<button class="px-10 py-5 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
+<button id="referral-cta" class="px-10 py-5 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
                                 Become a Partner
                             </button>
 </div>
@@ -358,6 +409,22 @@
 </div>
 </section>
 </main>
+<section id="terms-view" class="view-page">
+<div class="view-page-card">
+<h2 id="terms-title" class="font-headline-lg text-headline-lg mb-4">Terms &amp; Conditions</h2>
+<p id="terms-copy" class="font-body-md text-body-md mb-4">These terms outline how you may use the platform and the responsibilities of both parties.</p>
+<p id="terms-copy-2" class="font-body-md text-body-md">By using this site, you agree to use the content responsibly and not share misleading information.</p>
+<button id="back-home-terms" type="button" class="px-6 py-3 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">Back</button>
+</div>
+</section>
+<section id="privacy-view" class="view-page">
+<div class="view-page-card">
+<h2 id="privacy-title" class="font-headline-lg text-headline-lg mb-4">Privacy Policy</h2>
+<p id="privacy-copy" class="font-body-md text-body-md mb-4">We collect only the information needed to improve your experience and support your inquiries.</p>
+<p id="privacy-copy-2" class="font-body-md text-body-md">Your data is stored securely and is never shared without your permission.</p>
+<button id="back-home-privacy" type="button" class="px-6 py-3 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">Back</button>
+</div>
+</section>
 <!-- Footer -->
 <footer class="bg-surface-container-lowest border-t-2 border-on-surface">
 <div class="flex flex-col md:flex-row justify-between items-center py-stack-lg px-margin w-full max-w-container-max mx-auto gap-8">
@@ -370,16 +437,302 @@
                 </p>
 </div>
 <nav class="flex flex-wrap justify-center gap-6 md:gap-10">
-<a class="text-on-surface-variant font-medium hover:underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80 font-body-md text-body-md" href="#">Privacy Policy</a>
-<a class="text-on-surface-variant font-medium hover:underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80 font-body-md text-body-md" href="#">Terms of Service</a>
-<a class="text-on-surface-variant font-medium hover:underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80 font-body-md text-body-md" href="#">Contact Support</a>
-<a class="text-on-surface-variant font-medium hover:underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80 font-body-md text-body-md" href="#">LinkedIn</a>
-<a class="text-on-surface-variant font-medium hover:underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80 font-body-md text-body-md" href="#">Twitter</a>
+<a id="privacy-link" class="text-on-surface-variant font-medium hover:underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80 font-body-md text-body-md" href="#privacy" data-view="privacy">Privacy Policy</a>
+<a id="terms-link" class="text-on-surface-variant font-medium hover:underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80 font-body-md text-body-md" href="#terms" data-view="terms">Terms &amp; Conditions</a>
+<a id="contact-link" class="text-on-surface-variant font-medium hover:underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80 font-body-md text-body-md" href="#">Contact Support</a>
+<a id="linkedin-link" class="text-on-surface-variant font-medium hover:underline decoration-2 underline-offset-4 transition-opacity hover:opacity-80 font-body-md text-body-md" href="#">LinkedIn</a>
+<a id="twitter-link" class="text-on-surface-variant font-medium hover:opacity-80 font-body-md text-body-md" href="#">Twitter</a>
 </nav>
 </div>
 </footer>
 <script>
-        // Micro-interactions for buttons
+        const translations = {
+            en: {
+                brand: 'JhaTech Growth',
+                home: 'Home',
+                analysis: 'Analysis',
+                pricing: 'Pricing',
+                referral: 'Referral',
+                bookDemo: 'Book a Demo',
+                tryFree: 'Try for Free',
+                heroEyebrow: 'AI-Driven Digital Growth Platform',
+                heroTitle: 'Grow your business with a smart website and marketing plan.',
+                heroCopy: 'Built for shop owners, local brands, and partners who want faster growth, transparent pricing, and a simpler path to digital success.',
+                heroPrimary: 'Start Your Growth Check',
+                heroSecondary: 'Join Referral Program',
+                analysisEyebrow: '1. CUSTOMER PAIN-POINT ANALYSIS',
+                analysisTitle: 'Understand your challenge before building a solution.',
+                analysisBusinessLabel: 'Business name',
+                analysisChallengeLabel: 'Main challenge',
+                analysisSupportLabel: 'Preferred support',
+                analysisSubmit: 'Analyze with AI',
+                analysisCardTitle: 'What you get',
+                analysisBenefit1: 'AI-powered business analysis report',
+                analysisBenefit2: 'Website + marketing recommendations',
+                analysisBenefit3: 'Direct WhatsApp inquiry support',
+                analysisBenefit4: 'Competitor performance benchmarking',
+                analysisBusinessPlaceholder: 'e.g. Acme Studio',
+                analysisChallengePlaceholder: 'What is holding you back?',
+                pricingEyebrow: '2. TRANSPARENT PRICING & VALUE',
+                pricingTitle: 'Simple pricing with clear value at every step.',
+                plan1Title: 'Starter Growth Site',
+                plan2Title: 'Growth Marketing Bundle',
+                plan3Title: 'AI Smart Growth',
+                plan1Btn: 'Get Started',
+                plan2Btn: 'Go Premium',
+                plan3Btn: 'Inquire Now',
+                pricingHelpTitle: 'Need instant help?',
+                pricingHelpCopy: 'Message us directly on WhatsApp for quick answers and project guidance.',
+                pricingWhatsapp: 'Chat on WhatsApp',
+                referralEyebrow: '3. REFERRAL PARTNER PROGRAM',
+                referralTitle: 'Bring more clients and earn while helping businesses grow.',
+                referralCopy: 'Our partner ecosystem rewards community members who connect high-potential businesses with our growth infrastructure.',
+                referralWhyTitle: 'Why join?',
+                referralWhy1: 'Earn ₹1,000 per successful sale',
+                referralWhy2: 'No degree required to join',
+                referralWhy3: 'AI-guided support and pitch help',
+                referralSupportTitle: 'Support',
+                referralSupport1: 'Ready-to-use promo scripts',
+                referralSupport2: 'Exclusive growth webinars',
+                referralSupport3: 'Dedicated partner dashboard',
+                referralCta: 'Become a Partner',
+                footerPrivacy: 'Privacy Policy',
+                footerTerms: 'Terms & Conditions',
+                footerContact: 'Contact Support',
+                footerLinkedIn: 'LinkedIn',
+                footerTwitter: 'Twitter',
+                termsTitle: 'Terms & Conditions',
+                termsCopy: 'These terms outline how you may use the platform and the responsibilities of both parties.',
+                termsCopy2: 'By using this site, you agree to use the content responsibly and not share misleading information.',
+                privacyTitle: 'Privacy Policy',
+                privacyCopy: 'We collect only the information needed to improve your experience and support your inquiries.',
+                privacyCopy2: 'Your data is stored securely and is never shared without your permission.',
+                back: 'Back',
+                langLabel: 'Language switcher'
+            },
+            hi: {
+                brand: 'JhaTech Growth',
+                home: 'होम',
+                analysis: 'विश्लेषण',
+                pricing: 'मूल्य',
+                referral: 'रेफरल',
+                bookDemo: 'डेमो बुक करें',
+                tryFree: 'मुफ़्त आज़माएँ',
+                heroEyebrow: 'एआई-संचालित डिजिटल ग्रोथ प्लेटफ़ॉर्म',
+                heroTitle: 'एक स्मार्ट वेबसाइट और मार्केटिंग प्लान के साथ अपने व्यवसाय को बढ़ाएँ।',
+                heroCopy: 'दुकान मालिकों, स्थानीय ब्रांडों और Partners के लिए बनाया गया, जो तेज़ वृद्धि, पारदर्शी कीमत और डिजिटल सफलता की आसान राह चाहते हैं।',
+                heroPrimary: 'अपना ग्रोथ चेक शुरू करें',
+                heroSecondary: 'रेफरल प्रोग्राम में शामिल हों',
+                analysisEyebrow: '1. ग्राहक समस्या-विश्लेषण',
+                analysisTitle: 'एक समाधान बनाने से पहले अपनी चुनौती समझें।',
+                analysisBusinessLabel: 'व्यवसाय का नाम',
+                analysisChallengeLabel: 'मुख्य चुनौती',
+                analysisSupportLabel: 'पसंदीदा सहायता',
+                analysisSubmit: 'एआई के साथ विश्लेषण करें',
+                analysisCardTitle: 'आपको क्या मिलेगा',
+                analysisBenefit1: 'एआई-संचालित व्यवसाय विश्लेषण रिपोर्ट',
+                analysisBenefit2: 'वेबसाइट + मार्केटिंग सिफ़ारिशें',
+                analysisBenefit3: 'सीधी WhatsApp पूछताछ सहायता',
+                analysisBenefit4: 'प्रतिस्पर्धी प्रदर्शन बेंचमार्किंग',
+                analysisBusinessPlaceholder: 'उदा. Acme Studio',
+                analysisChallengePlaceholder: 'आपको क्या रोक रहा है?',
+                pricingEyebrow: '2. पारदर्शी मूल्य निर्धारण और मूल्य',
+                pricingTitle: 'हर कदम पर स्पष्ट मूल्य के साथ सरल कीमतें।',
+                plan1Title: 'स्टार्टर ग्रोथ साइट',
+                plan2Title: 'ग्रोथ मार्केटिंग बंडल',
+                plan3Title: 'एआई स्मार्ट ग्रोथ',
+                plan1Btn: 'शुरू करें',
+                plan2Btn: 'प्रीमियम जाएँ',
+                plan3Btn: 'अब पूछें',
+                pricingHelpTitle: 'तुरंत मदद चाहिए?',
+                pricingHelpCopy: 'त्वरित उत्तर और परियोजना मार्गदर्शन के लिए सीधे WhatsApp पर हमें संदेश भेजें।',
+                pricingWhatsapp: 'WhatsApp पर चैट करें',
+                referralEyebrow: '3. रेफरल पार्टनर प्रोग्राम',
+                referralTitle: 'अधिक ग्राहक लाएँ और व्यवसाय बढ़ाते हुए कमाएँ।',
+                referralCopy: 'हमारा पार्टनर पारिस्थितिकी तंत्र उन समुदाय सदस्यों को पुरस्कृत करता है जो उच्च-उम्मीदवारी वाले व्यवसायों को हमारी वृद्धि संरचना से जोड़ते हैं।',
+                referralWhyTitle: 'क्यों शामिल हों?',
+                referralWhy1: 'प्रत्येक सफल बिक्री पर ₹1,000 कमाएँ',
+                referralWhy2: 'शामिल होने के लिए डिग्री की आवश्यकता नहीं',
+                referralWhy3: 'एआई-निर्देशित सहायता और पिच हेल्प',
+                referralSupportTitle: 'सहायता',
+                referralSupport1: 'तैयार-पैकेज प्रचार स्क्रिप्ट',
+                referralSupport2: 'विशेष वृद्धि वेबिनार',
+                referralSupport3: 'समर्पित पार्टनर डैशबोर्ड',
+                referralCta: 'पार्टनर बनें',
+                footerPrivacy: 'गोपनीयता नीति',
+                footerTerms: 'शर्तें और नियम',
+                footerContact: 'समर्थन से संपर्क करें',
+                footerLinkedIn: 'लिंक्डइन',
+                footerTwitter: 'ट्विटर',
+                termsTitle: 'शर्तें और नियम',
+                termsCopy: 'ये शर्तें बताते हैं कि आप इस प्लेटफ़ॉर्म का उपयोग कैसे कर सकते हैं और दोनों पक्षों की ज़िम्मेदारियाँ क्या हैं।',
+                termsCopy2: 'इस साइट का उपयोग करके, आप सामग्री का जिम्मेदारी से उपयोग करने और भ्रामक जानकारी साझा नहीं करने पर सहमत होते हैं।',
+                privacyTitle: 'गोपनीयता नीति',
+                privacyCopy: 'हम आपके अनुभव को बेहतर बनाने और आपकी पूछताछ का समर्थन करने के लिए केवल आवश्यक जानकारी एकत्र करते हैं।',
+                privacyCopy2: 'आपका डेटा सुरक्षित रूप से संग्रहीत किया जाता है और आपकी अनुमति के बिना साझा नहीं किया जाता है।',
+                back: 'वापस',
+                langLabel: 'भाषा बदलने वाला'
+            }
+        };
+
+        const langToggle = document.getElementById('lang-toggle');
+        const langMenu = document.getElementById('lang-menu');
+        const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
+        const headerEl = document.querySelector('header');
+        const mainEl = document.querySelector('main');
+        const footerEl = document.querySelector('footer');
+        const termsView = document.getElementById('terms-view');
+        const privacyView = document.getElementById('privacy-view');
+
+        function setLanguage(lang) {
+            const current = translations[lang] ? lang : 'en';
+            const t = translations[current];
+            document.documentElement.lang = current === 'hi' ? 'hi' : 'en';
+            document.getElementById('brand-name').textContent = t.brand;
+            document.getElementById('nav-home').textContent = t.home;
+            document.getElementById('nav-analysis').textContent = t.analysis;
+            document.getElementById('nav-pricing').textContent = t.pricing;
+            document.getElementById('nav-referral').textContent = t.referral;
+            document.getElementById('book-demo').textContent = t.bookDemo;
+            document.getElementById('try-free').textContent = t.tryFree;
+            document.getElementById('hero-eyebrow').textContent = t.heroEyebrow;
+            document.getElementById('hero-title').textContent = t.heroTitle;
+            document.getElementById('hero-copy').textContent = t.heroCopy;
+            document.getElementById('hero-primary').textContent = t.heroPrimary;
+            document.getElementById('hero-secondary').textContent = t.heroSecondary;
+            document.getElementById('analysis-eyebrow').textContent = t.analysisEyebrow;
+            document.getElementById('analysis-title').textContent = t.analysisTitle;
+            document.getElementById('analysis-business-label').textContent = t.analysisBusinessLabel;
+            document.getElementById('analysis-challenge-label').textContent = t.analysisChallengeLabel;
+            document.getElementById('analysis-support-label').textContent = t.analysisSupportLabel;
+            document.getElementById('analysis-submit').textContent = t.analysisSubmit;
+            document.getElementById('analysis-card-title').textContent = t.analysisCardTitle;
+            document.getElementById('analysis-benefit-1').textContent = t.analysisBenefit1;
+            document.getElementById('analysis-benefit-2').textContent = t.analysisBenefit2;
+            document.getElementById('analysis-benefit-3').textContent = t.analysisBenefit3;
+            document.getElementById('analysis-benefit-4').textContent = t.analysisBenefit4;
+            document.getElementById('analysis-business').placeholder = t.analysisBusinessPlaceholder;
+            document.getElementById('analysis-challenge').placeholder = t.analysisChallengePlaceholder;
+            document.getElementById('pricing-eyebrow').textContent = t.pricingEyebrow;
+            document.getElementById('pricing-title').textContent = t.pricingTitle;
+            document.getElementById('plan-1-title').textContent = t.plan1Title;
+            document.getElementById('plan-2-title').textContent = t.plan2Title;
+            document.getElementById('plan-3-title').textContent = t.plan3Title;
+            document.getElementById('plan-1-btn').textContent = t.plan1Btn;
+            document.getElementById('plan-2-btn').textContent = t.plan2Btn;
+            document.getElementById('plan-3-btn').textContent = t.plan3Btn;
+            document.getElementById('pricing-help-title').textContent = t.pricingHelpTitle;
+            document.getElementById('pricing-help-copy').textContent = t.pricingHelpCopy;
+            document.getElementById('pricing-whatsapp').textContent = t.pricingWhatsapp;
+            document.getElementById('referral-eyebrow').textContent = t.referralEyebrow;
+            document.getElementById('referral-title').textContent = t.referralTitle;
+            document.getElementById('referral-copy').textContent = t.referralCopy;
+            document.getElementById('referral-why-title').textContent = t.referralWhyTitle;
+            document.getElementById('referral-why-1').textContent = t.referralWhy1;
+            document.getElementById('referral-why-2').textContent = t.referralWhy2;
+            document.getElementById('referral-why-3').textContent = t.referralWhy3;
+            document.getElementById('referral-support-title').textContent = t.referralSupportTitle;
+            document.getElementById('referral-support-1').textContent = t.referralSupport1;
+            document.getElementById('referral-support-2').textContent = t.referralSupport2;
+            document.getElementById('referral-support-3').textContent = t.referralSupport3;
+            document.getElementById('referral-cta').textContent = t.referralCta;
+            document.getElementById('privacy-link').textContent = t.footerPrivacy;
+            document.getElementById('terms-link').textContent = t.footerTerms;
+            document.getElementById('contact-link').textContent = t.footerContact;
+            document.getElementById('linkedin-link').textContent = t.footerLinkedIn;
+            document.getElementById('twitter-link').textContent = t.footerTwitter;
+            document.getElementById('terms-title').textContent = t.termsTitle;
+            document.getElementById('terms-copy').textContent = t.termsCopy;
+            document.getElementById('terms-copy-2').textContent = t.termsCopy2;
+            document.getElementById('privacy-title').textContent = t.privacyTitle;
+            document.getElementById('privacy-copy').textContent = t.privacyCopy;
+            document.getElementById('privacy-copy-2').textContent = t.privacyCopy2;
+            document.getElementById('back-home-terms').textContent = t.back;
+            document.getElementById('back-home-privacy').textContent = t.back;
+            document.getElementById('lang-toggle').setAttribute('aria-label', t.langLabel);
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.toggle('active', option.getAttribute('data-lang') === current);
+            });
+            localStorage.setItem('preferredLanguage', current);
+        }
+
+        function scrollToSection(id) {
+            const section = document.getElementById(id);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function showPage(view) {
+            const isLegal = view === 'terms' || view === 'privacy';
+            headerEl.style.display = isLegal ? 'none' : '';
+            mainEl.style.display = isLegal ? 'none' : '';
+            footerEl.style.display = isLegal ? 'none' : '';
+            termsView.classList.toggle('active', view === 'terms');
+            privacyView.classList.toggle('active', view === 'privacy');
+            if (!isLegal) {
+                document.body.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function syncViewFromHash() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash === 'terms') {
+                showPage('terms');
+            } else if (hash === 'privacy') {
+                showPage('privacy');
+            } else {
+                showPage('home');
+            }
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const target = link.getAttribute('data-target');
+                if (target) {
+                    history.pushState({}, '', `#${target}`);
+                    scrollToSection(`${target}-section`);
+                }
+            });
+        });
+
+        document.querySelectorAll('[data-view]').forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const view = link.getAttribute('data-view');
+                history.pushState({}, '', `#${view}`);
+                showPage(view);
+            });
+        });
+
+        document.querySelectorAll('#back-home-terms, #back-home-privacy').forEach(button => {
+            button.addEventListener('click', () => {
+                history.pushState({}, '', '#home');
+                showPage('home');
+            });
+        });
+
+        langToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            langMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', () => {
+                setLanguage(option.getAttribute('data-lang'));
+                langMenu.classList.add('hidden');
+            });
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.lang-switcher')) {
+                langMenu.classList.add('hidden');
+            }
+        });
+
+        window.addEventListener('hashchange', syncViewFromHash);
+
         document.querySelectorAll('button').forEach(btn => {
             btn.addEventListener('mousedown', () => {
                 btn.style.transform = 'translate(2px, 2px)';
@@ -406,5 +759,9 @@
                 }
             });
         });
+
+        const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+        setLanguage(savedLang);
+        syncViewFromHash();
     </script>
 </body></html>
