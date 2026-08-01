@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && cp code.html dist/code.html && cp .nojekyll dist/.nojekyll",
+    "build": "tsc -b && vite build && cp code.html dist/code.html && cp firebase.js dist/firebase.js && cp .nojekyll dist/.nojekyll",
     "lint": "oxlint",
     "preview": "vite preview"
   },

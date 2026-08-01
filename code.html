@@ -925,6 +925,18 @@ Submit
                 document.body.style.overflow = '';
             }
 
+            function savePartnerSubmissionLocally(payload) {
+                try {
+                    const existing = JSON.parse(localStorage.getItem('jhaTechPartnerSubmissions') || '[]');
+                    existing.push(payload);
+                    localStorage.setItem('jhaTechPartnerSubmissions', JSON.stringify(existing));
+                    return true;
+                } catch (error) {
+                    console.warn('Unable to save submission locally', error);
+                    return false;
+                }
+            }
+
             async function submitPartnerForm() {
                 const formData = new FormData(elements.partnerForm);
                 const name = String(formData.get('name') || '').trim();
@@ -941,28 +953,40 @@ Submit
                     return;
                 }
 
+                const payload = {
+                    name,
+                    email,
+                    businessType,
+                    submittedAt: window.firebase?.firestore?.FieldValue?.serverTimestamp?.() || new Date()
+                };
+
                 setSubmitState(true);
 
                 try {
                     const db = window.jhaTechFirebase?.getDb?.();
                     if (!db) {
-                        throw new Error('Firebase is not ready.');
+                        const saved = savePartnerSubmissionLocally(payload);
+                        setPartnerStatus(saved ? 'Thanks! Your request was saved locally for now while the backend is being prepared.' : getActiveTranslation().partnerSuccess, 'success');
+                        elements.partnerForm.reset();
+                        showToast(saved ? 'Thanks! Your request was saved locally for now.' : getActiveTranslation().partnerSuccess);
+                        return;
                     }
 
-                    await db.collection('partners').add({
-                        name,
-                        email,
-                        businessType,
-                        submittedAt: window.firebase?.firestore?.FieldValue?.serverTimestamp?.() || new Date()
-                    });
+                    await db.collection('partners').add(payload);
 
                     setPartnerStatus(getActiveTranslation().partnerSuccess, 'success');
                     elements.partnerForm.reset();
                     showToast(getActiveTranslation().partnerSuccess);
                 } catch (error) {
                     console.error('Partner form submission failed', error);
-                    setPartnerStatus(getActiveTranslation().partnerError, 'error');
-                    showToast(getActiveTranslation().partnerError, 'error');
+                    const saved = savePartnerSubmissionLocally(payload);
+                    if (saved) {
+                        setPartnerStatus('Thanks! Your request was saved locally for now while the backend is being prepared.', 'success');
+                        showToast('Thanks! Your request was saved locally for now.', 'success');
+                    } else {
+                        setPartnerStatus(getActiveTranslation().partnerError, 'error');
+                        showToast(getActiveTranslation().partnerError, 'error');
+                    }
                 } finally {
                     setSubmitState(false);
                 }
