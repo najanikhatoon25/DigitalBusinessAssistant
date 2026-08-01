@@ -1,11 +1,12 @@
 (() => {
   const firebaseConfig = {
-    apiKey: 'AIzaSyDUMMY-REPLACE-WITH-YOUR-API-KEY',
-    authDomain: 'digitalgrowthadvisor.firebaseapp.com',
-    projectId: 'digitalgrowthadvisor',
-    storageBucket: 'digitalgrowthadvisor.appspot.com',
-    messagingSenderId: '000000000000',
-    appId: '1:000000000000:web:0000000000000000000000'
+    apiKey: 'AIzaSyD5xHl0CYLutvpL8EFyRSICTwesXHycv_0',
+    authDomain: 'jhatech-assessment.firebaseapp.com',
+    projectId: 'jhatech-assessment',
+    storageBucket: 'jhatech-assessment.firebasestorage.app',
+    messagingSenderId: '695899245191',
+    appId: '1:695899245191:web:2ed22a45cd5778361bc622',
+    measurementId: 'G-J32YJJ27NK'
   };
 
   try {
