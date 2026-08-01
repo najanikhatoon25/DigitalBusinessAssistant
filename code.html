@@ -170,6 +170,67 @@
             box-shadow: 4px 4px 0px #191c1e;
             padding: 32px;
         }
+        .section-anchor {
+            scroll-margin-top: 96px;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 180ms ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background: #006e2f;
+            transition: width 200ms ease;
+        }
+        .nav-link.active {
+            color: #006e2f;
+        }
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .lang-menu {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-6px);
+            transition: opacity 180ms ease, transform 180ms ease;
+        }
+        .lang-menu.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .drawer-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 220ms ease;
+        }
+        .drawer-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .partner-drawer {
+            transform: translateX(100%);
+            transition: transform 260ms ease;
+        }
+        .partner-drawer.open {
+            transform: translateX(0);
+        }
+        .toast {
+            transform: translateY(12px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 220ms ease, transform 220ms ease;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body class="font-body-md text-body-md overflow-x-hidden">
@@ -180,10 +241,10 @@
                 JhaTech Growth
             </div>
 <nav class="hidden md:flex gap-8 items-center">
-<a id="nav-home" class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#home" data-target="home">Home</a>
-<a id="nav-analysis" class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#analysis" data-target="analysis">Analysis</a>
-<a id="nav-pricing" class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#pricing" data-target="pricing">Pricing</a>
-<a id="nav-referral" class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#referral" data-target="referral">Referral</a>
+<a id="nav-home" class="nav-link text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#home" data-target="home">Home</a>
+<a id="nav-analysis" class="nav-link text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#analysis" data-target="analysis">Analysis</a>
+<a id="nav-pricing" class="nav-link text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#pricing" data-target="pricing">Pricing</a>
+<a id="nav-referral" class="nav-link text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#referral" data-target="referral">Referral</a>
 </nav>
 <div class="flex items-center gap-4">
 <button id="book-demo" class="hidden lg:block px-6 py-3 brutalist-border font-button-text text-button-text bg-white hover:bg-surface-container transition-all active:translate-y-0.5 shadow-black">
@@ -194,9 +255,9 @@
                 </button>
 <div class="lang-switcher">
 <button id="lang-toggle" type="button" class="material-symbols-outlined text-on-surface cursor-pointer p-2 hover:bg-surface-container rounded-full" aria-label="Language switcher">language</button>
-<div id="lang-menu" class="lang-menu hidden">
-<button class="lang-option active" type="button" data-lang="en">EN</button>
-<button class="lang-option" type="button" data-lang="hi">HI</button>
+<div id="lang-menu" class="lang-menu" role="menu" aria-label="Language selector">
+<button class="lang-option active" type="button" data-lang="en" role="menuitem">English</button>
+<button class="lang-option" type="button" data-lang="hn" role="menuitem">HN</button>
 </div>
 </div>
 </div>
@@ -204,7 +265,7 @@
 </header>
 <main class="mt-20">
 <!-- Hero Section -->
-<section id="home-section" class="py-stack-xl px-margin max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<section id="home-section" class="section-anchor py-stack-xl px-margin max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 <div class="space-y-stack-lg">
 <span id="hero-eyebrow" class="font-label-md text-label-md text-primary tracking-widest uppercase">AI-Driven Digital Growth Platform</span>
 <h1 id="hero-title" class="font-headline-xl text-headline-xl leading-none">
@@ -231,7 +292,7 @@
 </div>
 </section>
 <!-- Problem/Solution Card (Pain-Point Analysis) -->
-<section id="analysis-section" class="py-stack-xl px-margin bg-surface-container-lowest">
+<section id="analysis-section" class="section-anchor py-stack-xl px-margin bg-surface-container-lowest">
 <div class="max-w-container-max mx-auto">
 <div class="brutalist-border bg-white p-stack-lg flex flex-col md:flex-row gap-12">
 <div class="flex-1 space-y-stack-md">
@@ -284,7 +345,7 @@
 </div>
 </section>
 <!-- Pricing Section -->
-<section id="pricing-section" class="py-stack-xl px-margin max-w-container-max mx-auto">
+<section id="pricing-section" class="section-anchor py-stack-xl px-margin max-w-container-max mx-auto">
 <div class="text-center mb-stack-xl">
 <span id="pricing-eyebrow" class="font-label-md text-label-md text-tertiary">2. TRANSPARENT PRICING &amp; VALUE</span>
 <h2 id="pricing-title" class="font-headline-lg text-headline-lg mt-2">Simple pricing with clear value at every step.</h2>
@@ -308,7 +369,7 @@
                             Basic SEO setup
                         </li>
 </ul>
-<button class="w-full py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
+<button id="plan-1-btn" class="w-full py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all">
                         Get Started
                     </button>
 </div>
@@ -360,14 +421,14 @@
 <div class="mt-stack-lg brutalist-border bg-secondary-container p-6 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
 <span id="pricing-help-title" class="font-headline-md text-headline-md">Need instant help?</span>
 <p id="pricing-help-copy" class="font-body-md text-body-md">Message us directly on WhatsApp for quick answers and project guidance.</p>
-<button id="pricing-whatsapp" class="px-6 py-3 brutalist-border bg-[#25D366] text-white font-button-text text-button-text shadow-black active:translate-y-0.5 transition-all flex items-center gap-2">
+<button id="pricing-whatsapp" type="button" class="px-6 py-3 brutalist-border bg-[#25D366] text-white font-button-text text-button-text shadow-black active:translate-y-0.5 transition-all flex items-center gap-2" aria-label="Open WhatsApp chat">
 <span class="material-symbols-outlined">chat</span>
                     Chat on WhatsApp
                 </button>
 </div>
 </section>
 <!-- Referral Section -->
-<section id="referral-section" class="py-stack-xl px-margin bg-inverse-surface text-inverse-on-surface">
+<section id="referral-section" class="section-anchor py-stack-xl px-margin bg-inverse-surface text-inverse-on-surface">
 <div class="max-w-container-max mx-auto">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 <div class="space-y-stack-md">
@@ -409,6 +470,40 @@
 </div>
 </section>
 </main>
+<div id="partner-drawer-overlay" class="drawer-overlay fixed inset-0 bg-black/60 z-[70]"></div>
+<aside id="partner-drawer" class="partner-drawer fixed top-0 right-0 h-full w-full md:w-[400px] bg-surface border-l-2 border-on-surface shadow-2xl z-[80] overflow-y-auto" aria-hidden="true">
+<div class="flex items-center justify-between p-6 border-b-2 border-on-surface">
+<h3 class="font-headline-md text-headline-md">Become a Partner</h3>
+<button id="close-partner-drawer" type="button" class="material-symbols-outlined text-on-surface cursor-pointer p-2 hover:bg-surface-container rounded-full" aria-label="Close partner drawer">close</button>
+</div>
+<form id="partner-form" class="p-6 space-y-4" novalidate>
+<div>
+<label class="block font-label-md text-label-md mb-2" for="partner-name">Full Name</label>
+<input id="partner-name" name="name" class="w-full brutalist-border p-3 focus:ring-0 focus:border-primary outline-none" type="text" required/>
+</div>
+<div>
+<label class="block font-label-md text-label-md mb-2" for="partner-email">Email Address</label>
+<input id="partner-email" name="email" class="w-full brutalist-border p-3 focus:ring-0 focus:border-primary outline-none" type="email" required/>
+</div>
+<div>
+<label class="block font-label-md text-label-md mb-2" for="partner-business-type">Business Type</label>
+<select id="partner-business-type" name="businessType" class="w-full brutalist-border p-3 focus:ring-0 focus:border-primary outline-none" required>
+<option value="">Select one</option>
+<option value="Startup">Startup</option>
+<option value="Small Business">Small Business</option>
+<option value="Agency">Agency</option>
+<option value="Freelancer">Freelancer</option>
+<option value="Enterprise">Enterprise</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<button id="partner-submit" type="submit" class="w-full py-4 brutalist-border bg-primary-container text-on-primary-container font-button-text text-button-text shadow-mint active:translate-y-0.5 transition-all disabled:opacity-70 disabled:cursor-not-allowed" aria-live="polite">
+Submit
+</button>
+</form>
+<div id="partner-form-status" class="px-6 pb-6 font-body-md text-body-md" role="status" aria-live="polite"></div>
+</aside>
+<div id="app-toast" class="toast fixed bottom-6 right-6 z-[90] max-w-sm rounded-none border-2 border-on-surface bg-white p-4 shadow-black" role="status" aria-live="polite"></div>
 <section id="terms-view" class="view-page">
 <div class="view-page-card">
 <h2 id="terms-title" class="font-headline-lg text-headline-lg mb-4">Terms &amp; Conditions</h2>
@@ -445,323 +540,568 @@
 </nav>
 </div>
 </footer>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="./firebase.js"></script>
 <script>
-        const translations = {
-            en: {
-                brand: 'JhaTech Growth',
-                home: 'Home',
-                analysis: 'Analysis',
-                pricing: 'Pricing',
-                referral: 'Referral',
-                bookDemo: 'Book a Demo',
-                tryFree: 'Try for Free',
-                heroEyebrow: 'AI-Driven Digital Growth Platform',
-                heroTitle: 'Grow your business with a smart website and marketing plan.',
-                heroCopy: 'Built for shop owners, local brands, and partners who want faster growth, transparent pricing, and a simpler path to digital success.',
-                heroPrimary: 'Start Your Growth Check',
-                heroSecondary: 'Join Referral Program',
-                analysisEyebrow: '1. CUSTOMER PAIN-POINT ANALYSIS',
-                analysisTitle: 'Understand your challenge before building a solution.',
-                analysisBusinessLabel: 'Business name',
-                analysisChallengeLabel: 'Main challenge',
-                analysisSupportLabel: 'Preferred support',
-                analysisSubmit: 'Analyze with AI',
-                analysisCardTitle: 'What you get',
-                analysisBenefit1: 'AI-powered business analysis report',
-                analysisBenefit2: 'Website + marketing recommendations',
-                analysisBenefit3: 'Direct WhatsApp inquiry support',
-                analysisBenefit4: 'Competitor performance benchmarking',
-                analysisBusinessPlaceholder: 'e.g. Acme Studio',
-                analysisChallengePlaceholder: 'What is holding you back?',
-                pricingEyebrow: '2. TRANSPARENT PRICING & VALUE',
-                pricingTitle: 'Simple pricing with clear value at every step.',
-                plan1Title: 'Starter Growth Site',
-                plan2Title: 'Growth Marketing Bundle',
-                plan3Title: 'AI Smart Growth',
-                plan1Btn: 'Get Started',
-                plan2Btn: 'Go Premium',
-                plan3Btn: 'Inquire Now',
-                pricingHelpTitle: 'Need instant help?',
-                pricingHelpCopy: 'Message us directly on WhatsApp for quick answers and project guidance.',
-                pricingWhatsapp: 'Chat on WhatsApp',
-                referralEyebrow: '3. REFERRAL PARTNER PROGRAM',
-                referralTitle: 'Bring more clients and earn while helping businesses grow.',
-                referralCopy: 'Our partner ecosystem rewards community members who connect high-potential businesses with our growth infrastructure.',
-                referralWhyTitle: 'Why join?',
-                referralWhy1: 'Earn ₹1,000 per successful sale',
-                referralWhy2: 'No degree required to join',
-                referralWhy3: 'AI-guided support and pitch help',
-                referralSupportTitle: 'Support',
-                referralSupport1: 'Ready-to-use promo scripts',
-                referralSupport2: 'Exclusive growth webinars',
-                referralSupport3: 'Dedicated partner dashboard',
-                referralCta: 'Become a Partner',
-                footerPrivacy: 'Privacy Policy',
-                footerTerms: 'Terms & Conditions',
-                footerContact: 'Contact Support',
-                footerLinkedIn: 'LinkedIn',
-                footerTwitter: 'Twitter',
-                termsTitle: 'Terms & Conditions',
-                termsCopy: 'These terms outline how you may use the platform and the responsibilities of both parties.',
-                termsCopy2: 'By using this site, you agree to use the content responsibly and not share misleading information.',
-                privacyTitle: 'Privacy Policy',
-                privacyCopy: 'We collect only the information needed to improve your experience and support your inquiries.',
-                privacyCopy2: 'Your data is stored securely and is never shared without your permission.',
-                back: 'Back',
-                langLabel: 'Language switcher'
-            },
-            hi: {
-                brand: 'JhaTech Growth',
-                home: 'होम',
-                analysis: 'विश्लेषण',
-                pricing: 'मूल्य',
-                referral: 'रेफरल',
-                bookDemo: 'डेमो बुक करें',
-                tryFree: 'मुफ़्त आज़माएँ',
-                heroEyebrow: 'एआई-संचालित डिजिटल ग्रोथ प्लेटफ़ॉर्म',
-                heroTitle: 'एक स्मार्ट वेबसाइट और मार्केटिंग प्लान के साथ अपने व्यवसाय को बढ़ाएँ।',
-                heroCopy: 'दुकान मालिकों, स्थानीय ब्रांडों और Partners के लिए बनाया गया, जो तेज़ वृद्धि, पारदर्शी कीमत और डिजिटल सफलता की आसान राह चाहते हैं।',
-                heroPrimary: 'अपना ग्रोथ चेक शुरू करें',
-                heroSecondary: 'रेफरल प्रोग्राम में शामिल हों',
-                analysisEyebrow: '1. ग्राहक समस्या-विश्लेषण',
-                analysisTitle: 'एक समाधान बनाने से पहले अपनी चुनौती समझें।',
-                analysisBusinessLabel: 'व्यवसाय का नाम',
-                analysisChallengeLabel: 'मुख्य चुनौती',
-                analysisSupportLabel: 'पसंदीदा सहायता',
-                analysisSubmit: 'एआई के साथ विश्लेषण करें',
-                analysisCardTitle: 'आपको क्या मिलेगा',
-                analysisBenefit1: 'एआई-संचालित व्यवसाय विश्लेषण रिपोर्ट',
-                analysisBenefit2: 'वेबसाइट + मार्केटिंग सिफ़ारिशें',
-                analysisBenefit3: 'सीधी WhatsApp पूछताछ सहायता',
-                analysisBenefit4: 'प्रतिस्पर्धी प्रदर्शन बेंचमार्किंग',
-                analysisBusinessPlaceholder: 'उदा. Acme Studio',
-                analysisChallengePlaceholder: 'आपको क्या रोक रहा है?',
-                pricingEyebrow: '2. पारदर्शी मूल्य निर्धारण और मूल्य',
-                pricingTitle: 'हर कदम पर स्पष्ट मूल्य के साथ सरल कीमतें।',
-                plan1Title: 'स्टार्टर ग्रोथ साइट',
-                plan2Title: 'ग्रोथ मार्केटिंग बंडल',
-                plan3Title: 'एआई स्मार्ट ग्रोथ',
-                plan1Btn: 'शुरू करें',
-                plan2Btn: 'प्रीमियम जाएँ',
-                plan3Btn: 'अब पूछें',
-                pricingHelpTitle: 'तुरंत मदद चाहिए?',
-                pricingHelpCopy: 'त्वरित उत्तर और परियोजना मार्गदर्शन के लिए सीधे WhatsApp पर हमें संदेश भेजें।',
-                pricingWhatsapp: 'WhatsApp पर चैट करें',
-                referralEyebrow: '3. रेफरल पार्टनर प्रोग्राम',
-                referralTitle: 'अधिक ग्राहक लाएँ और व्यवसाय बढ़ाते हुए कमाएँ।',
-                referralCopy: 'हमारा पार्टनर पारिस्थितिकी तंत्र उन समुदाय सदस्यों को पुरस्कृत करता है जो उच्च-उम्मीदवारी वाले व्यवसायों को हमारी वृद्धि संरचना से जोड़ते हैं।',
-                referralWhyTitle: 'क्यों शामिल हों?',
-                referralWhy1: 'प्रत्येक सफल बिक्री पर ₹1,000 कमाएँ',
-                referralWhy2: 'शामिल होने के लिए डिग्री की आवश्यकता नहीं',
-                referralWhy3: 'एआई-निर्देशित सहायता और पिच हेल्प',
-                referralSupportTitle: 'सहायता',
-                referralSupport1: 'तैयार-पैकेज प्रचार स्क्रिप्ट',
-                referralSupport2: 'विशेष वृद्धि वेबिनार',
-                referralSupport3: 'समर्पित पार्टनर डैशबोर्ड',
-                referralCta: 'पार्टनर बनें',
-                footerPrivacy: 'गोपनीयता नीति',
-                footerTerms: 'शर्तें और नियम',
-                footerContact: 'समर्थन से संपर्क करें',
-                footerLinkedIn: 'लिंक्डइन',
-                footerTwitter: 'ट्विटर',
-                termsTitle: 'शर्तें और नियम',
-                termsCopy: 'ये शर्तें बताते हैं कि आप इस प्लेटफ़ॉर्म का उपयोग कैसे कर सकते हैं और दोनों पक्षों की ज़िम्मेदारियाँ क्या हैं।',
-                termsCopy2: 'इस साइट का उपयोग करके, आप सामग्री का जिम्मेदारी से उपयोग करने और भ्रामक जानकारी साझा नहीं करने पर सहमत होते हैं।',
-                privacyTitle: 'गोपनीयता नीति',
-                privacyCopy: 'हम आपके अनुभव को बेहतर बनाने और आपकी पूछताछ का समर्थन करने के लिए केवल आवश्यक जानकारी एकत्र करते हैं।',
-                privacyCopy2: 'आपका डेटा सुरक्षित रूप से संग्रहीत किया जाता है और आपकी अनुमति के बिना साझा नहीं किया जाता है।',
-                back: 'वापस',
-                langLabel: 'भाषा बदलने वाला'
-            }
-        };
+        (() => {
+            const config = {
+                whatsappPhoneNumber: '919999999999',
+                whatsappMessage: "Hello! I'm interested in learning more about your Digital Growth Advisor.",
+                aiChatUrl: 'https://gemini.google.com/',
+                scrollOffset: 96,
+                languageKey: 'preferredLanguage'
+            };
 
-        const langToggle = document.getElementById('lang-toggle');
-        const langMenu = document.getElementById('lang-menu');
-        const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
-        const headerEl = document.querySelector('header');
-        const mainEl = document.querySelector('main');
-        const footerEl = document.querySelector('footer');
-        const termsView = document.getElementById('terms-view');
-        const privacyView = document.getElementById('privacy-view');
-
-        function setLanguage(lang) {
-            const current = translations[lang] ? lang : 'en';
-            const t = translations[current];
-            document.documentElement.lang = current === 'hi' ? 'hi' : 'en';
-            document.getElementById('brand-name').textContent = t.brand;
-            document.getElementById('nav-home').textContent = t.home;
-            document.getElementById('nav-analysis').textContent = t.analysis;
-            document.getElementById('nav-pricing').textContent = t.pricing;
-            document.getElementById('nav-referral').textContent = t.referral;
-            document.getElementById('book-demo').textContent = t.bookDemo;
-            document.getElementById('try-free').textContent = t.tryFree;
-            document.getElementById('hero-eyebrow').textContent = t.heroEyebrow;
-            document.getElementById('hero-title').textContent = t.heroTitle;
-            document.getElementById('hero-copy').textContent = t.heroCopy;
-            document.getElementById('hero-primary').textContent = t.heroPrimary;
-            document.getElementById('hero-secondary').textContent = t.heroSecondary;
-            document.getElementById('analysis-eyebrow').textContent = t.analysisEyebrow;
-            document.getElementById('analysis-title').textContent = t.analysisTitle;
-            document.getElementById('analysis-business-label').textContent = t.analysisBusinessLabel;
-            document.getElementById('analysis-challenge-label').textContent = t.analysisChallengeLabel;
-            document.getElementById('analysis-support-label').textContent = t.analysisSupportLabel;
-            document.getElementById('analysis-submit').textContent = t.analysisSubmit;
-            document.getElementById('analysis-card-title').textContent = t.analysisCardTitle;
-            document.getElementById('analysis-benefit-1').textContent = t.analysisBenefit1;
-            document.getElementById('analysis-benefit-2').textContent = t.analysisBenefit2;
-            document.getElementById('analysis-benefit-3').textContent = t.analysisBenefit3;
-            document.getElementById('analysis-benefit-4').textContent = t.analysisBenefit4;
-            document.getElementById('analysis-business').placeholder = t.analysisBusinessPlaceholder;
-            document.getElementById('analysis-challenge').placeholder = t.analysisChallengePlaceholder;
-            document.getElementById('pricing-eyebrow').textContent = t.pricingEyebrow;
-            document.getElementById('pricing-title').textContent = t.pricingTitle;
-            document.getElementById('plan-1-title').textContent = t.plan1Title;
-            document.getElementById('plan-2-title').textContent = t.plan2Title;
-            document.getElementById('plan-3-title').textContent = t.plan3Title;
-            document.getElementById('plan-1-btn').textContent = t.plan1Btn;
-            document.getElementById('plan-2-btn').textContent = t.plan2Btn;
-            document.getElementById('plan-3-btn').textContent = t.plan3Btn;
-            document.getElementById('pricing-help-title').textContent = t.pricingHelpTitle;
-            document.getElementById('pricing-help-copy').textContent = t.pricingHelpCopy;
-            document.getElementById('pricing-whatsapp').textContent = t.pricingWhatsapp;
-            document.getElementById('referral-eyebrow').textContent = t.referralEyebrow;
-            document.getElementById('referral-title').textContent = t.referralTitle;
-            document.getElementById('referral-copy').textContent = t.referralCopy;
-            document.getElementById('referral-why-title').textContent = t.referralWhyTitle;
-            document.getElementById('referral-why-1').textContent = t.referralWhy1;
-            document.getElementById('referral-why-2').textContent = t.referralWhy2;
-            document.getElementById('referral-why-3').textContent = t.referralWhy3;
-            document.getElementById('referral-support-title').textContent = t.referralSupportTitle;
-            document.getElementById('referral-support-1').textContent = t.referralSupport1;
-            document.getElementById('referral-support-2').textContent = t.referralSupport2;
-            document.getElementById('referral-support-3').textContent = t.referralSupport3;
-            document.getElementById('referral-cta').textContent = t.referralCta;
-            document.getElementById('privacy-link').textContent = t.footerPrivacy;
-            document.getElementById('terms-link').textContent = t.footerTerms;
-            document.getElementById('contact-link').textContent = t.footerContact;
-            document.getElementById('linkedin-link').textContent = t.footerLinkedIn;
-            document.getElementById('twitter-link').textContent = t.footerTwitter;
-            document.getElementById('terms-title').textContent = t.termsTitle;
-            document.getElementById('terms-copy').textContent = t.termsCopy;
-            document.getElementById('terms-copy-2').textContent = t.termsCopy2;
-            document.getElementById('privacy-title').textContent = t.privacyTitle;
-            document.getElementById('privacy-copy').textContent = t.privacyCopy;
-            document.getElementById('privacy-copy-2').textContent = t.privacyCopy2;
-            document.getElementById('back-home-terms').textContent = t.back;
-            document.getElementById('back-home-privacy').textContent = t.back;
-            document.getElementById('lang-toggle').setAttribute('aria-label', t.langLabel);
-            document.querySelectorAll('.lang-option').forEach(option => {
-                option.classList.toggle('active', option.getAttribute('data-lang') === current);
-            });
-            localStorage.setItem('preferredLanguage', current);
-        }
-
-        function scrollToSection(id) {
-            const section = document.getElementById(id);
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        function showPage(view) {
-            const isLegal = view === 'terms' || view === 'privacy';
-            headerEl.style.display = isLegal ? 'none' : '';
-            mainEl.style.display = isLegal ? 'none' : '';
-            footerEl.style.display = isLegal ? 'none' : '';
-            termsView.classList.toggle('active', view === 'terms');
-            privacyView.classList.toggle('active', view === 'privacy');
-            if (!isLegal) {
-                document.body.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        function syncViewFromHash() {
-            const hash = window.location.hash.replace('#', '');
-            if (hash === 'terms') {
-                showPage('terms');
-            } else if (hash === 'privacy') {
-                showPage('privacy');
-            } else {
-                showPage('home');
-            }
-        }
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const target = link.getAttribute('data-target');
-                if (target) {
-                    history.pushState({}, '', `#${target}`);
-                    scrollToSection(`${target}-section`);
+            const translations = {
+                en: {
+                    brand: 'JhaTech Growth',
+                    home: 'Home',
+                    analysis: 'Analysis',
+                    pricing: 'Pricing',
+                    referral: 'Referral',
+                    bookDemo: 'Book a Demo',
+                    tryFree: 'Try for Free',
+                    heroEyebrow: 'AI-Driven Digital Growth Platform',
+                    heroTitle: 'Grow your business with a smart website and marketing plan.',
+                    heroCopy: 'Built for shop owners, local brands, and partners who want faster growth, transparent pricing, and a simpler path to digital success.',
+                    heroPrimary: 'Start Your Growth Check',
+                    heroSecondary: 'Join Referral Program',
+                    analysisEyebrow: '1. CUSTOMER PAIN-POINT ANALYSIS',
+                    analysisTitle: 'Understand your challenge before building a solution.',
+                    analysisBusinessLabel: 'Business name',
+                    analysisChallengeLabel: 'Main challenge',
+                    analysisSupportLabel: 'Preferred support',
+                    analysisSubmit: 'Analyze with AI',
+                    analysisCardTitle: 'What you get',
+                    analysisBenefit1: 'AI-powered business analysis report',
+                    analysisBenefit2: 'Website + marketing recommendations',
+                    analysisBenefit3: 'Direct WhatsApp inquiry support',
+                    analysisBenefit4: 'Competitor performance benchmarking',
+                    analysisBusinessPlaceholder: 'e.g. Acme Studio',
+                    analysisChallengePlaceholder: 'What is holding you back?',
+                    pricingEyebrow: '2. TRANSPARENT PRICING & VALUE',
+                    pricingTitle: 'Simple pricing with clear value at every step.',
+                    plan1Title: 'Starter Growth Site',
+                    plan2Title: 'Growth Marketing Bundle',
+                    plan3Title: 'AI Smart Growth',
+                    plan1Btn: 'Get Started',
+                    plan2Btn: 'Go Premium',
+                    plan3Btn: 'Inquire Now',
+                    pricingHelpTitle: 'Need instant help?',
+                    pricingHelpCopy: 'Message us directly on WhatsApp for quick answers and project guidance.',
+                    pricingWhatsapp: 'Chat on WhatsApp',
+                    referralEyebrow: '3. REFERRAL PARTNER PROGRAM',
+                    referralTitle: 'Bring more clients and earn while helping businesses grow.',
+                    referralCopy: 'Our partner ecosystem rewards community members who connect high-potential businesses with our growth infrastructure.',
+                    referralWhyTitle: 'Why join?',
+                    referralWhy1: 'Earn ₹1,000 per successful sale',
+                    referralWhy2: 'No degree required to join',
+                    referralWhy3: 'AI-guided support and pitch help',
+                    referralSupportTitle: 'Support',
+                    referralSupport1: 'Ready-to-use promo scripts',
+                    referralSupport2: 'Exclusive growth webinars',
+                    referralSupport3: 'Dedicated partner dashboard',
+                    referralCta: 'Become a Partner',
+                    footerPrivacy: 'Privacy Policy',
+                    footerTerms: 'Terms & Conditions',
+                    footerContact: 'Contact Support',
+                    footerLinkedIn: 'LinkedIn',
+                    footerTwitter: 'Twitter',
+                    termsTitle: 'Terms & Conditions',
+                    termsCopy: 'These terms outline how you may use the platform and the responsibilities of both parties.',
+                    termsCopy2: 'By using this site, you agree to use the content responsibly and not share misleading information.',
+                    privacyTitle: 'Privacy Policy',
+                    privacyCopy: 'We collect only the information needed to improve your experience and support your inquiries.',
+                    privacyCopy2: 'Your data is stored securely and is never shared without your permission.',
+                    back: 'Back',
+                    langLabel: 'Language switcher',
+                    partnerTitle: 'Become a Partner',
+                    partnerCloseLabel: 'Close partner drawer',
+                    partnerNameLabel: 'Full Name',
+                    partnerEmailLabel: 'Email Address',
+                    partnerBusinessLabel: 'Business Type',
+                    partnerSelectPlaceholder: 'Select one',
+                    partnerSubmit: 'Submit',
+                    partnerSuccess: 'Thanks! Your partner request has been received.',
+                    partnerError: 'Please check the form and try again.',
+                    partnerRequired: 'Please fill in all required fields.'
+                },
+                hn: {
+                    brand: 'JhaTech Growth',
+                    home: 'होम',
+                    analysis: 'विश्लेषण',
+                    pricing: 'मूल्य',
+                    referral: 'रेफरल',
+                    bookDemo: 'डेमो बुक करें',
+                    tryFree: 'मुफ़्त आज़माएँ',
+                    heroEyebrow: 'एआई-संचालित डिजिटल ग्रोथ प्लेटफ़ॉर्म',
+                    heroTitle: 'एक स्मार्ट वेबसाइट और मार्केटिंग प्लान के साथ अपने व्यवसाय को बढ़ाएँ।',
+                    heroCopy: 'दुकान मालिकों, स्थानीय ब्रांडों और Partners के लिए बनाया गया, जो तेज़ वृद्धि, पारदर्शी कीमत और डिजिटल सफलता की आसान राह चाहते हैं।',
+                    heroPrimary: 'अपना ग्रोथ चेक शुरू करें',
+                    heroSecondary: 'रेफरल प्रोग्राम में शामिल हों',
+                    analysisEyebrow: '1. ग्राहक समस्या-विश्लेषण',
+                    analysisTitle: 'एक समाधान बनाने से पहले अपनी चुनौती समझें।',
+                    analysisBusinessLabel: 'व्यवसाय का नाम',
+                    analysisChallengeLabel: 'मुख्य चुनौती',
+                    analysisSupportLabel: 'पसंदीदा सहायता',
+                    analysisSubmit: 'एआई के साथ विश्लेषण करें',
+                    analysisCardTitle: 'आपको क्या मिलेगा',
+                    analysisBenefit1: 'एआई-संचालित व्यवसाय विश्लेषण रिपोर्ट',
+                    analysisBenefit2: 'वेबसाइट + मार्केटिंग सिफ़ारिशें',
+                    analysisBenefit3: 'सीधी WhatsApp पूछताछ सहायता',
+                    analysisBenefit4: 'प्रतिस्पर्धी प्रदर्शन बेंचमार्किंग',
+                    analysisBusinessPlaceholder: 'उदा. Acme Studio',
+                    analysisChallengePlaceholder: 'आपको क्या रोक रहा है?',
+                    pricingEyebrow: '2. पारदर्शी मूल्य निर्धारण और मूल्य',
+                    pricingTitle: 'हर कदम पर स्पष्ट मूल्य के साथ सरल कीमतें।',
+                    plan1Title: 'स्टार्टर ग्रोथ साइट',
+                    plan2Title: 'ग्रोथ मार्केटिंग बंडल',
+                    plan3Title: 'एआई स्मार्ट ग्रोथ',
+                    plan1Btn: 'शुरू करें',
+                    plan2Btn: 'प्रीमियम जाएँ',
+                    plan3Btn: 'अब पूछें',
+                    pricingHelpTitle: 'तुरंत मदद चाहिए?',
+                    pricingHelpCopy: 'त्वरित उत्तर और परियोजना मार्गदर्शन के लिए सीधे WhatsApp पर हमें संदेश भेजें।',
+                    pricingWhatsapp: 'WhatsApp पर चैट करें',
+                    referralEyebrow: '3. रेफरल पार्टनर प्रोग्राम',
+                    referralTitle: 'अधिक ग्राहक लाएँ और व्यवसाय बढ़ाते हुए कमाएँ।',
+                    referralCopy: 'हमारा पार्टनर पारिस्थितिकी तंत्र उन समुदाय सदस्यों को पुरस्कृत करता है जो उच्च-उम्मीदवारी वाले व्यवसायों को हमारी वृद्धि संरचना से जोड़ते हैं।',
+                    referralWhyTitle: 'क्यों शामिल हों?',
+                    referralWhy1: 'प्रत्येक सफल बिक्री पर ₹1,000 कमाएँ',
+                    referralWhy2: 'शामिल होने के लिए डिग्री की आवश्यकता नहीं',
+                    referralWhy3: 'एआई-निर्देशित सहायता और पिच हेल्प',
+                    referralSupportTitle: 'सहायता',
+                    referralSupport1: 'तैयार-पैकेज प्रचार स्क्रिप्ट',
+                    referralSupport2: 'विशेष वृद्धि वेबिनार',
+                    referralSupport3: 'समर्पित पार्टनर डैशबोर्ड',
+                    referralCta: 'पार्टनर बनें',
+                    footerPrivacy: 'गोपनीयता नीति',
+                    footerTerms: 'शर्तें और नियम',
+                    footerContact: 'समर्थन से संपर्क करें',
+                    footerLinkedIn: 'लिंक्डइन',
+                    footerTwitter: 'ट्विटर',
+                    termsTitle: 'शर्तें और नियम',
+                    termsCopy: 'ये शर्तें बताते हैं कि आप इस प्लेटफ़ॉर्म का उपयोग कैसे कर सकते हैं और दोनों पक्षों की ज़िम्मेदारियाँ क्या हैं।',
+                    termsCopy2: 'इस साइट का उपयोग करके, आप सामग्री का जिम्मेदारी से उपयोग करने और भ्रामक जानकारी साझा नहीं करने पर सहमत होते हैं।',
+                    privacyTitle: 'गोपनीयता नीति',
+                    privacyCopy: 'हम आपके अनुभव को बेहतर बनाने और आपकी पूछताछ का समर्थन करने के लिए केवल आवश्यक जानकारी एकत्र करते हैं।',
+                    privacyCopy2: 'आपका डेटा सुरक्षित रूप से संग्रहीत किया जाता है और आपकी अनुमति के बिना साझा नहीं किया जाता है।',
+                    back: 'वापस',
+                    langLabel: 'भाषा बदलने वाला',
+                    partnerTitle: 'पार्टनर बनें',
+                    partnerCloseLabel: 'पार्टनर डैशबोर्ड बंद करें',
+                    partnerNameLabel: 'पूरा नाम',
+                    partnerEmailLabel: 'ईमेल पता',
+                    partnerBusinessLabel: 'व्यवसाय प्रकार',
+                    partnerSelectPlaceholder: 'एक चुनें',
+                    partnerSubmit: 'भेजें',
+                    partnerSuccess: 'धन्यवाद! आपकी पार्टनर अनुरोध प्राप्त हो गई है।',
+                    partnerError: 'कृपया फॉर्म की जाँच करें और फिर से कोशिश करें।',
+                    partnerRequired: 'कृपया सभी अनिवार्य फील्ड भरें।'
                 }
-            });
-        });
+            };
 
-        document.querySelectorAll('[data-view]').forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const view = link.getAttribute('data-view');
-                history.pushState({}, '', `#${view}`);
-                showPage(view);
-            });
-        });
+            const elements = {
+                langToggle: document.getElementById('lang-toggle'),
+                langMenu: document.getElementById('lang-menu'),
+                navLinks: Array.from(document.querySelectorAll('header nav a[data-target]')),
+                header: document.querySelector('header'),
+                main: document.querySelector('main'),
+                footer: document.querySelector('footer'),
+                termsView: document.getElementById('terms-view'),
+                privacyView: document.getElementById('privacy-view'),
+                partnerDrawerOverlay: document.getElementById('partner-drawer-overlay'),
+                partnerDrawer: document.getElementById('partner-drawer'),
+                closePartnerDrawerButton: document.getElementById('close-partner-drawer'),
+                partnerForm: document.getElementById('partner-form'),
+                partnerSubmitButton: document.getElementById('partner-submit'),
+                partnerStatus: document.getElementById('partner-form-status'),
+                partnerOpenButton: document.getElementById('referral-cta'),
+                appToast: document.getElementById('app-toast'),
+                analysisForm: document.getElementById('analysis-submit')
+            };
 
-        document.querySelectorAll('#back-home-terms, #back-home-privacy').forEach(button => {
-            button.addEventListener('click', () => {
-                history.pushState({}, '', '#home');
-                showPage('home');
-            });
-        });
-
-        langToggle.addEventListener('click', (event) => {
-            event.stopPropagation();
-            langMenu.classList.toggle('hidden');
-        });
-
-        document.querySelectorAll('.lang-option').forEach(option => {
-            option.addEventListener('click', () => {
-                setLanguage(option.getAttribute('data-lang'));
-                langMenu.classList.add('hidden');
-            });
-        });
-
-        document.addEventListener('click', (event) => {
-            if (!event.target.closest('.lang-switcher')) {
-                langMenu.classList.add('hidden');
+            function init() {
+                bindNavigation();
+                bindScrollLogic();
+                bindLanguage();
+                bindPartnerDrawer();
+                bindButtons();
+                bindLegalViews();
+                bindAnalysisAction();
+                setLanguage(localStorage.getItem(config.languageKey) || 'en');
+                syncViewFromHash();
             }
-        });
 
-        window.addEventListener('hashchange', syncViewFromHash);
+            // Navigation
+            function bindNavigation() {
+                elements.navLinks.forEach((link) => {
+                    link.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const target = link.getAttribute('data-target');
+                        if (target) {
+                            history.pushState({}, '', `#${target}`);
+                            scrollToSection(`${target}-section`);
+                            setActiveNavLink(target);
+                        }
+                    });
+                });
+            }
 
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('mousedown', () => {
-                btn.style.transform = 'translate(2px, 2px)';
-                if (btn.classList.contains('shadow-mint')) {
-                    btn.style.boxShadow = '2px 2px 0px #22c55e';
-                } else if (btn.classList.contains('shadow-black')) {
-                    btn.style.boxShadow = '2px 2px 0px #191c1e';
-                }
-            });
-            btn.addEventListener('mouseup', () => {
-                btn.style.transform = 'translate(0px, 0px)';
-                if (btn.classList.contains('shadow-mint')) {
-                    btn.style.boxShadow = '4px 4px 0px #22c55e';
-                } else if (btn.classList.contains('shadow-black')) {
-                    btn.style.boxShadow = '4px 4px 0px #191c1e';
-                }
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0px, 0px)';
-                if (btn.classList.contains('shadow-mint')) {
-                    btn.style.boxShadow = '4px 4px 0px #22c55e';
-                } else if (btn.classList.contains('shadow-black')) {
-                    btn.style.boxShadow = '4px 4px 0px #191c1e';
-                }
-            });
-        });
+            function setActiveNavLink(target) {
+                elements.navLinks.forEach((link) => {
+                    const isActive = link.getAttribute('data-target') === target;
+                    link.classList.toggle('active', isActive);
+                });
+            }
 
-        const savedLang = localStorage.getItem('preferredLanguage') || 'en';
-        setLanguage(savedLang);
-        syncViewFromHash();
+            // Scroll logic
+            function bindScrollLogic() {
+                const sections = ['home-section', 'analysis-section', 'pricing-section', 'referral-section'];
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const id = entry.target.id.replace('-section', '');
+                            setActiveNavLink(id);
+                        }
+                    });
+                }, { rootMargin: '-35% 0px -45% 0px' });
+
+                sections.forEach((sectionId) => {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        observer.observe(section);
+                    }
+                });
+            }
+
+            function scrollToSection(sectionId) {
+                const section = document.getElementById(sectionId);
+                if (!section) {
+                    return;
+                }
+
+                const top = window.scrollY + section.getBoundingClientRect().top - config.scrollOffset;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+
+            // Language
+            function bindLanguage() {
+                elements.langToggle.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    toggleLanguageMenu();
+                });
+
+                document.querySelectorAll('.lang-option').forEach((option) => {
+                    option.addEventListener('click', () => {
+                        setLanguage(option.getAttribute('data-lang'));
+                        closeLanguageMenu();
+                    });
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!event.target.closest('.lang-switcher')) {
+                        closeLanguageMenu();
+                    }
+                });
+
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        closeLanguageMenu();
+                        closePartnerDrawer();
+                    }
+                });
+            }
+
+            function toggleLanguageMenu() {
+                elements.langMenu.classList.toggle('open');
+            }
+
+            function closeLanguageMenu() {
+                elements.langMenu.classList.remove('open');
+            }
+
+            function setLanguage(lang) {
+                const current = translations[lang] ? lang : 'en';
+                const t = translations[current];
+
+                document.documentElement.lang = current === 'hn' ? 'hi' : 'en';
+                document.getElementById('brand-name').textContent = t.brand;
+                document.getElementById('nav-home').textContent = t.home;
+                document.getElementById('nav-analysis').textContent = t.analysis;
+                document.getElementById('nav-pricing').textContent = t.pricing;
+                document.getElementById('nav-referral').textContent = t.referral;
+                document.getElementById('book-demo').textContent = t.bookDemo;
+                document.getElementById('try-free').textContent = t.tryFree;
+                document.getElementById('hero-eyebrow').textContent = t.heroEyebrow;
+                document.getElementById('hero-title').textContent = t.heroTitle;
+                document.getElementById('hero-copy').textContent = t.heroCopy;
+                document.getElementById('hero-primary').textContent = t.heroPrimary;
+                document.getElementById('hero-secondary').textContent = t.heroSecondary;
+                document.getElementById('analysis-eyebrow').textContent = t.analysisEyebrow;
+                document.getElementById('analysis-title').textContent = t.analysisTitle;
+                document.getElementById('analysis-business-label').textContent = t.analysisBusinessLabel;
+                document.getElementById('analysis-challenge-label').textContent = t.analysisChallengeLabel;
+                document.getElementById('analysis-support-label').textContent = t.analysisSupportLabel;
+                document.getElementById('analysis-submit').textContent = t.analysisSubmit;
+                document.getElementById('analysis-card-title').textContent = t.analysisCardTitle;
+                document.getElementById('analysis-benefit-1').textContent = t.analysisBenefit1;
+                document.getElementById('analysis-benefit-2').textContent = t.analysisBenefit2;
+                document.getElementById('analysis-benefit-3').textContent = t.analysisBenefit3;
+                document.getElementById('analysis-benefit-4').textContent = t.analysisBenefit4;
+                document.getElementById('analysis-business').placeholder = t.analysisBusinessPlaceholder;
+                document.getElementById('analysis-challenge').placeholder = t.analysisChallengePlaceholder;
+                document.getElementById('pricing-eyebrow').textContent = t.pricingEyebrow;
+                document.getElementById('pricing-title').textContent = t.pricingTitle;
+                document.getElementById('plan-1-title').textContent = t.plan1Title;
+                document.getElementById('plan-2-title').textContent = t.plan2Title;
+                document.getElementById('plan-3-title').textContent = t.plan3Title;
+                document.getElementById('plan-1-btn').textContent = t.plan1Btn;
+                document.getElementById('plan-2-btn').textContent = t.plan2Btn;
+                document.getElementById('plan-3-btn').textContent = t.plan3Btn;
+                document.getElementById('pricing-help-title').textContent = t.pricingHelpTitle;
+                document.getElementById('pricing-help-copy').textContent = t.pricingHelpCopy;
+                document.getElementById('pricing-whatsapp').textContent = t.pricingWhatsapp;
+                document.getElementById('referral-eyebrow').textContent = t.referralEyebrow;
+                document.getElementById('referral-title').textContent = t.referralTitle;
+                document.getElementById('referral-copy').textContent = t.referralCopy;
+                document.getElementById('referral-why-title').textContent = t.referralWhyTitle;
+                document.getElementById('referral-why-1').textContent = t.referralWhy1;
+                document.getElementById('referral-why-2').textContent = t.referralWhy2;
+                document.getElementById('referral-why-3').textContent = t.referralWhy3;
+                document.getElementById('referral-support-title').textContent = t.referralSupportTitle;
+                document.getElementById('referral-support-1').textContent = t.referralSupport1;
+                document.getElementById('referral-support-2').textContent = t.referralSupport2;
+                document.getElementById('referral-support-3').textContent = t.referralSupport3;
+                document.getElementById('referral-cta').textContent = t.referralCta;
+                document.getElementById('privacy-link').textContent = t.footerPrivacy;
+                document.getElementById('terms-link').textContent = t.footerTerms;
+                document.getElementById('contact-link').textContent = t.footerContact;
+                document.getElementById('linkedin-link').textContent = t.footerLinkedIn;
+                document.getElementById('twitter-link').textContent = t.footerTwitter;
+                document.getElementById('terms-title').textContent = t.termsTitle;
+                document.getElementById('terms-copy').textContent = t.termsCopy;
+                document.getElementById('terms-copy-2').textContent = t.termsCopy2;
+                document.getElementById('privacy-title').textContent = t.privacyTitle;
+                document.getElementById('privacy-copy').textContent = t.privacyCopy;
+                document.getElementById('privacy-copy-2').textContent = t.privacyCopy2;
+                document.getElementById('back-home-terms').textContent = t.back;
+                document.getElementById('back-home-privacy').textContent = t.back;
+                document.getElementById('lang-toggle').setAttribute('aria-label', t.langLabel);
+                elements.langToggle.textContent = current === 'hn' ? 'HN' : 'EN';
+                document.querySelectorAll('.lang-option').forEach((option) => {
+                    option.classList.toggle('active', option.getAttribute('data-lang') === current);
+                });
+                localStorage.setItem(config.languageKey, current);
+            }
+
+            // Partner drawer
+            function bindPartnerDrawer() {
+                elements.partnerOpenButton.addEventListener('click', openPartnerDrawer);
+                elements.closePartnerDrawerButton.addEventListener('click', closePartnerDrawer);
+                elements.partnerDrawerOverlay.addEventListener('click', closePartnerDrawer);
+                elements.partnerForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    await submitPartnerForm();
+                });
+            }
+
+            function openPartnerDrawer() {
+                elements.partnerDrawerOverlay.classList.add('open');
+                elements.partnerDrawer.classList.add('open');
+                elements.partnerDrawer.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                elements.partnerForm.reset();
+                setPartnerStatus('');
+                const firstInput = document.getElementById('partner-name');
+                firstInput?.focus();
+            }
+
+            function closePartnerDrawer() {
+                elements.partnerDrawerOverlay.classList.remove('open');
+                elements.partnerDrawer.classList.remove('open');
+                elements.partnerDrawer.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+
+            async function submitPartnerForm() {
+                const formData = new FormData(elements.partnerForm);
+                const name = String(formData.get('name') || '').trim();
+                const email = String(formData.get('email') || '').trim();
+                const businessType = String(formData.get('businessType') || '').trim();
+
+                if (!name || !email || !businessType) {
+                    setPartnerStatus(getActiveTranslation().partnerRequired, 'error');
+                    return;
+                }
+
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    setPartnerStatus('Please enter a valid email address.', 'error');
+                    return;
+                }
+
+                setSubmitState(true);
+
+                try {
+                    const db = window.jhaTechFirebase?.getDb?.();
+                    if (!db) {
+                        throw new Error('Firebase is not ready.');
+                    }
+
+                    await db.collection('partners').add({
+                        name,
+                        email,
+                        businessType,
+                        submittedAt: window.firebase?.firestore?.FieldValue?.serverTimestamp?.() || new Date()
+                    });
+
+                    setPartnerStatus(getActiveTranslation().partnerSuccess, 'success');
+                    elements.partnerForm.reset();
+                    showToast(getActiveTranslation().partnerSuccess);
+                } catch (error) {
+                    console.error('Partner form submission failed', error);
+                    setPartnerStatus(getActiveTranslation().partnerError, 'error');
+                    showToast(getActiveTranslation().partnerError, 'error');
+                } finally {
+                    setSubmitState(false);
+                }
+            }
+
+            function setSubmitState(isLoading) {
+                elements.partnerSubmitButton.disabled = isLoading;
+                elements.partnerSubmitButton.textContent = isLoading ? 'Submitting...' : getActiveTranslation().partnerSubmit;
+            }
+
+            function setPartnerStatus(message, type = '') {
+                elements.partnerStatus.textContent = message;
+                elements.partnerStatus.className = 'px-6 pb-6 font-body-md text-body-md';
+                if (type === 'error') {
+                    elements.partnerStatus.classList.add('text-error');
+                } else if (type === 'success') {
+                    elements.partnerStatus.classList.add('text-primary');
+                }
+            }
+
+            function getActiveTranslation() {
+                const current = localStorage.getItem(config.languageKey) || 'en';
+                return translations[current] || translations.en;
+            }
+
+            // Buttons and actions
+            function bindButtons() {
+                document.querySelectorAll('button').forEach((button) => {
+                    button.addEventListener('mousedown', () => {
+                        button.style.transform = 'translate(2px, 2px)';
+                        if (button.classList.contains('shadow-mint')) {
+                            button.style.boxShadow = '2px 2px 0px #22c55e';
+                        } else if (button.classList.contains('shadow-black')) {
+                            button.style.boxShadow = '2px 2px 0px #191c1e';
+                        }
+                    });
+                    button.addEventListener('mouseup', () => {
+                        button.style.transform = 'translate(0px, 0px)';
+                        if (button.classList.contains('shadow-mint')) {
+                            button.style.boxShadow = '4px 4px 0px #22c55e';
+                        } else if (button.classList.contains('shadow-black')) {
+                            button.style.boxShadow = '4px 4px 0px #191c1e';
+                        }
+                    });
+                    button.addEventListener('mouseleave', () => {
+                        button.style.transform = 'translate(0px, 0px)';
+                        if (button.classList.contains('shadow-mint')) {
+                            button.style.boxShadow = '4px 4px 0px #22c55e';
+                        } else if (button.classList.contains('shadow-black')) {
+                            button.style.boxShadow = '4px 4px 0px #191c1e';
+                        }
+                    });
+                });
+
+                document.getElementById('pricing-whatsapp').addEventListener('click', () => {
+                    const url = `https://wa.me/${config.whatsappPhoneNumber}?text=${encodeURIComponent(config.whatsappMessage)}`;
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                });
+
+                document.getElementById('hero-primary').addEventListener('click', () => {
+                    scrollToSection('analysis-section');
+                });
+
+                document.getElementById('hero-secondary').addEventListener('click', () => {
+                    scrollToSection('referral-section');
+                });
+            }
+
+            function bindAnalysisAction() {
+                const button = document.getElementById('analysis-submit');
+                const form = document.getElementById('analysis-business').closest('form');
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    window.open(config.aiChatUrl, '_blank', 'noopener,noreferrer');
+                });
+                form.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    window.open(config.aiChatUrl, '_blank', 'noopener,noreferrer');
+                });
+            }
+
+            // Legal view routing
+            function bindLegalViews() {
+                document.querySelectorAll('[data-view]').forEach((link) => {
+                    link.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const view = link.getAttribute('data-view');
+                        history.pushState({}, '', `#${view}`);
+                        showPage(view);
+                    });
+                });
+
+                document.querySelectorAll('#back-home-terms, #back-home-privacy').forEach((button) => {
+                    button.addEventListener('click', () => {
+                        history.pushState({}, '', '#home');
+                        showPage('home');
+                    });
+                });
+
+                window.addEventListener('hashchange', syncViewFromHash);
+            }
+
+            function showPage(view) {
+                const isLegal = view === 'terms' || view === 'privacy';
+                elements.header.style.display = isLegal ? 'none' : '';
+                elements.main.style.display = isLegal ? 'none' : '';
+                elements.footer.style.display = isLegal ? 'none' : '';
+                elements.termsView.classList.toggle('active', view === 'terms');
+                elements.privacyView.classList.toggle('active', view === 'privacy');
+                if (!isLegal) {
+                    document.body.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+
+            function syncViewFromHash() {
+                const hash = window.location.hash.replace('#', '');
+                if (hash === 'terms') {
+                    showPage('terms');
+                } else if (hash === 'privacy') {
+                    showPage('privacy');
+                } else {
+                    showPage('home');
+                }
+            }
+
+            // Utilities
+            function showToast(message, type = 'success') {
+                elements.appToast.textContent = message;
+                elements.appToast.classList.remove('show');
+                elements.appToast.classList.add('show');
+                elements.appToast.classList.toggle('text-error', type === 'error');
+                elements.appToast.classList.toggle('text-primary', type === 'success');
+                clearTimeout(showToast.timeout);
+                showToast.timeout = setTimeout(() => {
+                    elements.appToast.classList.remove('show');
+                }, 2800);
+            }
+
+            init();
+        })();
     </script>
 </body></html>
