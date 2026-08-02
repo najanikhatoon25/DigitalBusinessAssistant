@@ -1,5 +1,7 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import './App.css'
+import { db } from './firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 type Language = 'en' | 'hi'
 
@@ -203,10 +205,19 @@ function App() {
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
   const [formData, setFormData] = useState({ businessName: '', challenge: '', support: '' })
   const [message, setMessage] = useState('')
+  const [languageMenuOpen, setLanguageMenuOpen] = useState(false)
 
   const t = translations[language]
 
-  const handleAnalyze = (event: FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref');
+    if (refCode) {
+      localStorage.setItem('jhaTechReferralCode', refCode);
+    }
+  }, []);
+
+  const handleAnalyze = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     if (!formData.businessName.trim() || !formData.challenge.trim() || !formData.support.trim()) {
@@ -217,12 +228,34 @@ function App() {
 
     const recommendations = buildRecommendations(language, formData.businessName.trim())
 
+    try {
+      const refCode = localStorage.getItem('jhaTechReferralCode') || null;
+      await addDoc(collection(db, 'analyses'), {
+        businessName: formData.businessName.trim(),
+        challenge: formData.challenge.trim(),
+        support: formData.support.trim(),
+        referralCode: refCode,
+        submittedAt: serverTimestamp(),
+      });
+    } catch (err) {
+      console.error('Failed to save analysis to Firestore', err);
+    }
+
     setAnalysis({ recommendations })
     setMessage(t.analysisReady)
   }
 
   const openCalendly = () => {
-    window.open('https://calendly.com/jhatech-growth/30min', '_blank', 'width=1000,height=700,scrollbars=1')
+    // --- CALENDLY URL PLACEHOLDER ---
+    // You can replace the URL below with your custom Calendly link
+    const calendlyUrl = 'https://calendly.com/jhatech-growth/30min';
+    // ---------------------------------
+    const calendlyObj = (window as any).Calendly;
+    if (calendlyObj && typeof calendlyObj.initPopupWidget === 'function') {
+      calendlyObj.initPopupWidget({ url: calendlyUrl });
+    } else {
+      window.open(calendlyUrl, '_blank', 'width=1000,height=700,scrollbars=1');
+    }
   }
 
   return (
@@ -234,18 +267,42 @@ function App() {
             <button type="button" className="secondary-btn" onClick={openCalendly}>
               {t.bookNow}
             </button>
-            <label className="lang-switcher" aria-label={t.languageLabel}>
-              <span className="lang-icon" aria-hidden="true">
-                🌐
-              </span>
-              <select
-                value={language}
-                onChange={(event) => setLanguage(event.target.value as Language)}
+            <div className="lang-switcher" aria-label={t.languageLabel}>
+              <button
+                type="button"
+                className="lang-trigger"
+                onClick={() => setLanguageMenuOpen((current) => !current)}
+                aria-expanded={languageMenuOpen}
               >
-                <option value="en">English</option>
-                <option value="hi">Hindi</option>
-              </select>
-            </label>
+                <span className="lang-icon" aria-hidden="true">
+                  🌐
+                </span>
+              </button>
+              {languageMenuOpen ? (
+                <div className="lang-menu">
+                  <button
+                    type="button"
+                    className={language === 'en' ? 'lang-option active' : 'lang-option'}
+                    onClick={() => {
+                      setLanguage('en')
+                      setLanguageMenuOpen(false)
+                    }}
+                  >
+                    English
+                  </button>
+                  <button
+                    type="button"
+                    className={language === 'hi' ? 'lang-option active' : 'lang-option'}
+                    onClick={() => {
+                      setLanguage('hi')
+                      setLanguageMenuOpen(false)
+                    }}
+                  >
+                    Hindi
+                  </button>
+                </div>
+              ) : null}
+            </div>
             <a className="nav-link" href="#pricing">
               {t.viewPricing}
             </a>

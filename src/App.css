@@ -37,6 +37,7 @@
 }
 
 .lang-switcher {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -48,13 +49,43 @@
   font-weight: 600;
 }
 
-.lang-switcher select {
+.lang-trigger {
   border: none;
   background: transparent;
-  font: inherit;
   color: inherit;
-  outline: none;
+  font: inherit;
   cursor: pointer;
+  padding: 0;
+}
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: grid;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #ddd6fe;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+  min-width: 120px;
+  z-index: 10;
+}
+
+.lang-option {
+  border: none;
+  background: transparent;
+  color: #374151;
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lang-option.active {
+  background: #ede9fe;
+  color: #4338ca;
 }
 
 .hero-grid {

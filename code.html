@@ -8,6 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Calendly widget CSS and JS -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"/>
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -248,7 +251,7 @@
 </nav>
 <div class="flex items-center gap-4">
 <button id="book-demo" class="hidden lg:block px-6 py-3 brutalist-border font-button-text text-button-text bg-white hover:bg-surface-container transition-all active:translate-y-0.5 shadow-black">
-                    Book a Demo
+                    Book Now
                 </button>
 <button id="try-free" class="px-6 py-3 brutalist-border font-button-text text-button-text bg-primary-container text-on-primary-container hover:opacity-90 transition-all active:translate-y-0.5 shadow-mint">
                     Try for Free
@@ -528,7 +531,7 @@ Submit
                     JhaTech Growth
                 </div>
 <p class="font-body-md text-body-md text-on-surface-variant max-w-sm text-center md:text-left">
-                    © 2024 JhaTech Growth. All rights reserved. Built for high-velocity enterprise expansion.
+                    © 2026 JhaTech Growth. All rights reserved. Built for high-velocity enterprise expansion.
                 </p>
 </div>
 <nav class="flex flex-wrap justify-center gap-6 md:gap-10">
@@ -545,6 +548,7 @@ Submit
 <script src="./firebase.js"></script>
 <script>
         (() => {
+            let currentRecommendations = null;
             const config = {
                 whatsappPhoneNumber: '919999999999',
                 whatsappMessage: "Hello! I'm interested in learning more about your Digital Growth Advisor.",
@@ -560,7 +564,7 @@ Submit
                     analysis: 'Analysis',
                     pricing: 'Pricing',
                     referral: 'Referral',
-                    bookDemo: 'Book a Demo',
+                    bookDemo: 'Book Now',
                     tryFree: 'Try for Free',
                     heroEyebrow: 'AI-Driven Digital Growth Platform',
                     heroTitle: 'Grow your business with a smart website and marketing plan.',
@@ -633,7 +637,7 @@ Submit
                     analysis: 'विश्लेषण',
                     pricing: 'मूल्य',
                     referral: 'रेफरल',
-                    bookDemo: 'डेमो बुक करें',
+                    bookDemo: 'अभी बुक करें',
                     tryFree: 'मुफ़्त आज़माएँ',
                     heroEyebrow: 'एआई-संचालित डिजिटल ग्रोथ प्लेटफ़ॉर्म',
                     heroTitle: 'एक स्मार्ट वेबसाइट और मार्केटिंग प्लान के साथ अपने व्यवसाय को बढ़ाएँ।',
@@ -723,6 +727,13 @@ Submit
             };
 
             function init() {
+                // Parse referral code from URL if present
+                const urlParams = new URLSearchParams(window.location.search);
+                const refCode = urlParams.get('ref');
+                if (refCode) {
+                    localStorage.setItem('jhaTechReferralCode', refCode);
+                }
+
                 bindNavigation();
                 bindScrollLogic();
                 bindLanguage();
@@ -730,6 +741,7 @@ Submit
                 bindButtons();
                 bindLegalViews();
                 bindAnalysisAction();
+                bindCalendlyButton();
                 setLanguage(localStorage.getItem(config.languageKey) || 'en');
                 syncViewFromHash();
             }
@@ -845,11 +857,20 @@ Submit
                 document.getElementById('analysis-challenge-label').textContent = t.analysisChallengeLabel;
                 document.getElementById('analysis-support-label').textContent = t.analysisSupportLabel;
                 document.getElementById('analysis-submit').textContent = t.analysisSubmit;
-                document.getElementById('analysis-card-title').textContent = t.analysisCardTitle;
-                document.getElementById('analysis-benefit-1').textContent = t.analysisBenefit1;
-                document.getElementById('analysis-benefit-2').textContent = t.analysisBenefit2;
-                document.getElementById('analysis-benefit-3').textContent = t.analysisBenefit3;
-                document.getElementById('analysis-benefit-4').textContent = t.analysisBenefit4;
+                if (currentRecommendations) {
+                    displayRecommendations(
+                        currentRecommendations.businessName,
+                        currentRecommendations.challenge,
+                        currentRecommendations.support,
+                        current
+                    );
+                } else {
+                    document.getElementById('analysis-card-title').textContent = t.analysisCardTitle;
+                    document.getElementById('analysis-benefit-1').textContent = t.analysisBenefit1;
+                    document.getElementById('analysis-benefit-2').textContent = t.analysisBenefit2;
+                    document.getElementById('analysis-benefit-3').textContent = t.analysisBenefit3;
+                    document.getElementById('analysis-benefit-4').textContent = t.analysisBenefit4;
+                }
                 document.getElementById('analysis-business').placeholder = t.analysisBusinessPlaceholder;
                 document.getElementById('analysis-challenge').placeholder = t.analysisChallengePlaceholder;
                 document.getElementById('pricing-eyebrow').textContent = t.pricingEyebrow;
@@ -953,36 +974,84 @@ Submit
                     return;
                 }
 
+                const referralCode = 'REF' + Math.floor(10000 + Math.random() * 90000);
                 const payload = {
                     name,
                     email,
                     businessType,
+                    referralCode,
                     submittedAt: window.firebase?.firestore?.FieldValue?.serverTimestamp?.() || new Date()
                 };
 
                 setSubmitState(true);
 
+                const referralLink = `${window.location.origin}${window.location.pathname}?ref=${referralCode}`;
+                const successHtml = `
+                    <p class="mb-4">${getActiveTranslation().partnerSuccess}</p>
+                    <div class="brutalist-border p-3 bg-white text-on-surface mb-3">
+                        <span class="block font-label-md text-label-md mb-1 text-secondary">YOUR REFERRAL LINK</span>
+                        <span class="block font-body-md break-all select-all font-mono text-sm">${referralLink}</span>
+                    </div>
+                    <button id="copy-ref-btn" type="button" class="w-full py-2.5 brutalist-border bg-white text-on-surface font-button-text text-button-text shadow-black active:translate-y-0.5 transition-all cursor-pointer">
+                        Copy Referral Link
+                    </button>
+                `;
+
+                const setupCopyButton = () => {
+                    const copyBtn = document.getElementById('copy-ref-btn');
+                    if (copyBtn) {
+                        copyBtn.addEventListener('click', () => {
+                            navigator.clipboard.writeText(referralLink).then(() => {
+                                showToast('Referral link copied!');
+                                copyBtn.textContent = 'Copied!';
+                                setTimeout(() => {
+                                    copyBtn.textContent = 'Copy Referral Link';
+                                }, 2000);
+                            }).catch(err => {
+                                console.error('Failed to copy link', err);
+                                showToast('Failed to copy link.', 'error');
+                            });
+                        });
+                        copyBtn.addEventListener('mousedown', () => {
+                            copyBtn.style.transform = 'translate(2px, 2px)';
+                            copyBtn.style.boxShadow = '2px 2px 0px #191c1e';
+                        });
+                        copyBtn.addEventListener('mouseup', () => {
+                            copyBtn.style.transform = 'translate(0px, 0px)';
+                            copyBtn.style.boxShadow = '4px 4px 0px #191c1e';
+                        });
+                        copyBtn.addEventListener('mouseleave', () => {
+                            copyBtn.style.transform = 'translate(0px, 0px)';
+                            copyBtn.style.boxShadow = '4px 4px 0px #191c1e';
+                        });
+                    }
+                };
+
                 try {
                     const db = window.jhaTechFirebase?.getDb?.();
                     if (!db) {
                         const saved = savePartnerSubmissionLocally(payload);
-                        setPartnerStatus(saved ? 'Thanks! Your request was saved locally for now while the backend is being prepared.' : getActiveTranslation().partnerSuccess, 'success');
+                        setPartnerStatus(saved ? successHtml : getActiveTranslation().partnerSuccess, 'success');
                         elements.partnerForm.reset();
-                        showToast(saved ? 'Thanks! Your request was saved locally for now.' : getActiveTranslation().partnerSuccess);
+                        showToast(saved ? 'Saved locally. Referral link ready!' : getActiveTranslation().partnerSuccess);
+                        if (saved) setupCopyButton();
                         return;
                     }
 
                     await db.collection('partners').add(payload);
 
-                    setPartnerStatus(getActiveTranslation().partnerSuccess, 'success');
+                    setPartnerStatus(successHtml, 'success');
                     elements.partnerForm.reset();
                     showToast(getActiveTranslation().partnerSuccess);
+                    setupCopyButton();
                 } catch (error) {
                     console.error('Partner form submission failed', error);
                     const saved = savePartnerSubmissionLocally(payload);
                     if (saved) {
-                        setPartnerStatus('Thanks! Your request was saved locally for now while the backend is being prepared.', 'success');
-                        showToast('Thanks! Your request was saved locally for now.', 'success');
+                        setPartnerStatus(successHtml, 'success');
+                        elements.partnerForm.reset();
+                        showToast('Saved locally. Referral link ready!');
+                        setupCopyButton();
                     } else {
                         setPartnerStatus(getActiveTranslation().partnerError, 'error');
                         showToast(getActiveTranslation().partnerError, 'error');
@@ -998,7 +1067,7 @@ Submit
             }
 
             function setPartnerStatus(message, type = '') {
-                elements.partnerStatus.textContent = message;
+                elements.partnerStatus.innerHTML = message;
                 elements.partnerStatus.className = 'px-6 pb-6 font-body-md text-body-md';
                 if (type === 'error') {
                     elements.partnerStatus.classList.add('text-error');
@@ -1010,6 +1079,120 @@ Submit
             function getActiveTranslation() {
                 const current = localStorage.getItem(config.languageKey) || 'en';
                 return translations[current] || translations.en;
+            }
+
+            function generateAIRecommendations(businessName, challenge, support, lang) {
+                if (lang === 'hn') {
+                    return [
+                        `"${businessName}" के लिए मोबाइल-फ्रेंडली लैंडिंग पेज बनाएं ताकि "${challenge}" जैसी चुनौतियों का समाधान हो।`,
+                        `ग्राहकों की पूछताछ को आसान बनाने के लिए "${support}" के लिए स्पष्ट बुकिंग फ्लो जोड़ें।`,
+                        `स्थानीय खोज और गूगल बिजनेस प्रोफाइल से दृश्यता बढ़ाएं।`,
+                        `एक सरल अनुवर्ती अनुक्रम (follow-up sequence) शुरू करें ताकि ग्राहक सक्रिय रहें।`
+                    ];
+                }
+                return [
+                    `Create a mobile-friendly landing page for "${businessName}" to help resolve "${challenge}".`,
+                    `Add a clear booking/contact flow optimized for your "${support}" needs.`,
+                    `Improve local visibility with search optimization and a Google Business Profile.`,
+                    `Set up a simple client follow-up system so inquiries stay engaged.`
+                ];
+            }
+
+            function displayRecommendations(businessName, challenge, support, lang) {
+                const recs = generateAIRecommendations(businessName, challenge, support, lang);
+                document.getElementById('analysis-card-title').textContent = lang === 'hn' ? 'एआई सिफारिशें' : 'AI Recommendations';
+                document.getElementById('analysis-benefit-1').textContent = recs[0];
+                document.getElementById('analysis-benefit-2').textContent = recs[1];
+                document.getElementById('analysis-benefit-3').textContent = recs[2];
+                document.getElementById('analysis-benefit-4').textContent = recs[3];
+            }
+
+            function saveAnalysisSubmissionLocally(payload) {
+                try {
+                    const existing = JSON.parse(localStorage.getItem('jhaTechAnalysisSubmissions') || '[]');
+                    existing.push(payload);
+                    localStorage.setItem('jhaTechAnalysisSubmissions', JSON.stringify(existing));
+                    return true;
+                } catch (error) {
+                    console.warn('Unable to save analysis locally', error);
+                    return false;
+                }
+            }
+
+            async function runAnalysis() {
+                const businessName = document.getElementById('analysis-business').value.trim();
+                const challenge = document.getElementById('analysis-challenge').value.trim();
+                const support = document.getElementById('analysis-support').value;
+
+                if (!businessName || !challenge || !support) {
+                    showToast(getActiveTranslation().partnerRequired || 'Please fill in all required fields.', 'error');
+                    return;
+                }
+
+                // Prepare payload
+                const refCode = localStorage.getItem('jhaTechReferralCode') || null;
+                const payload = {
+                    businessName,
+                    challenge,
+                    support,
+                    referralCode: refCode,
+                    submittedAt: window.firebase?.firestore?.FieldValue?.serverTimestamp?.() || new Date()
+                };
+
+                // Disable button and show loading state
+                const button = document.getElementById('analysis-submit');
+                const originalText = button.textContent;
+                button.disabled = true;
+                button.textContent = getActiveTranslation().languageKey === 'hn' ? 'विश्लेषण किया जा रहा है...' : 'Analyzing...';
+
+                try {
+                    // Save to Firestore
+                    const db = window.jhaTechFirebase?.getDb?.();
+                    if (db) {
+                        await db.collection('analyses').add(payload);
+                    } else {
+                        saveAnalysisSubmissionLocally(payload);
+                    }
+
+                    // Simulate a small AI processing delay for realistic UX
+                    await new Promise(resolve => setTimeout(resolve, 800));
+
+                    // Store recommendations parameters
+                    currentRecommendations = { businessName, challenge, support };
+                    
+                    // Display recommendations
+                    const currentLang = localStorage.getItem(config.languageKey) || 'en';
+                    displayRecommendations(businessName, challenge, support, currentLang);
+                    
+                    showToast(currentLang === 'hn' ? 'एआई विश्लेषण पूरा हुआ!' : 'AI Analysis completed successfully!');
+                } catch (error) {
+                    console.error('Analysis submission failed', error);
+                    const saved = saveAnalysisSubmissionLocally(payload);
+                    if (saved) {
+                        currentRecommendations = { businessName, challenge, support };
+                        const currentLang = localStorage.getItem(config.languageKey) || 'en';
+                        displayRecommendations(businessName, challenge, support, currentLang);
+                        showToast('Saved locally. Analysis completed successfully!');
+                    } else {
+                        showToast('Failed to complete AI analysis. Please try again.', 'error');
+                    }
+                } finally {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                }
+            }
+
+            function bindAnalysisAction() {
+                const button = document.getElementById('analysis-submit');
+                const form = document.getElementById('analysis-business').closest('form');
+                button.addEventListener('click', async (event) => {
+                    event.preventDefault();
+                    await runAnalysis();
+                });
+                form.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    await runAnalysis();
+                });
             }
 
             // Buttons and actions
@@ -1055,18 +1238,25 @@ Submit
                 });
             }
 
-            function bindAnalysisAction() {
-                const button = document.getElementById('analysis-submit');
-                const form = document.getElementById('analysis-business').closest('form');
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    window.open(config.aiChatUrl, '_blank', 'noopener,noreferrer');
-                });
-                form.addEventListener('submit', (event) => {
-                    event.preventDefault();
-                    window.open(config.aiChatUrl, '_blank', 'noopener,noreferrer');
-                });
+            function bindCalendlyButton() {
+                const bookDemoButton = document.getElementById('book-demo');
+                if (bookDemoButton) {
+                    bookDemoButton.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        // --- CALENDLY URL PLACEHOLDER ---
+                        // You can replace the URL below with your custom Calendly link
+                        const calendlyUrl = 'https://calendly.com/jhatech-growth/30min';
+                        // ---------------------------------
+                        if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+                            window.Calendly.initPopupWidget({ url: calendlyUrl });
+                        } else {
+                            window.open(calendlyUrl, '_blank', 'width=1000,height=700,scrollbars=1');
+                        }
+                    });
+                }
             }
+
+
 
             // Legal view routing
             function bindLegalViews() {
