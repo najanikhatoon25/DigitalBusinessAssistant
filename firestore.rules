@@ -6,10 +6,5 @@ service cloud.firestore {
       allow create: if request.auth == null || request.auth != null;
       allow update, delete: if false;
     }
-    match /analyses/{document=**} {
-      allow read: if false;
-      allow create: if request.auth == null || request.auth != null;
-      allow update, delete: if false;
-    }
   }
 }

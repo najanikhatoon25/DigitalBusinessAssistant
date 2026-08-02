@@ -1,7 +1,5 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import './App.css'
-import { db } from './firebase'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 type Language = 'en' | 'hi'
 
@@ -226,35 +224,23 @@ function App() {
       return
     }
 
-    const recommendations = buildRecommendations(language, formData.businessName.trim())
+    setMessage(language === 'hi' ? 'विश्लेषण किया जा रहा है...' : 'Analyzing...')
 
-    try {
-      const refCode = localStorage.getItem('jhaTechReferralCode') || null;
-      await addDoc(collection(db, 'analyses'), {
-        businessName: formData.businessName.trim(),
-        challenge: formData.challenge.trim(),
-        support: formData.support.trim(),
-        referralCode: refCode,
-        submittedAt: serverTimestamp(),
-      });
-    } catch (err) {
-      console.error('Failed to save analysis to Firestore', err);
-    }
+    await new Promise((resolve) => setTimeout(resolve, 2500))
+
+    const recommendations = buildRecommendations(language, formData.businessName.trim())
 
     setAnalysis({ recommendations })
     setMessage(t.analysisReady)
   }
 
   const openCalendly = () => {
-    // --- CALENDLY URL PLACEHOLDER ---
-    // You can replace the URL below with your custom Calendly link
-    const calendlyUrl = 'https://calendly.com/jhatech-growth/30min';
-    // ---------------------------------
+    const calendlyUrl = 'https://calendly.com/najanikhatoon25-navgurukul/30min';
     const calendlyObj = (window as any).Calendly;
     if (calendlyObj && typeof calendlyObj.initPopupWidget === 'function') {
       calendlyObj.initPopupWidget({ url: calendlyUrl });
     } else {
-      window.open(calendlyUrl, '_blank', 'width=1000,height=700,scrollbars=1');
+      window.open(calendlyUrl, '_blank', 'noopener,noreferrer');
     }
   }
 
